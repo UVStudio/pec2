@@ -14,7 +14,6 @@ module.exports = function(req, res, next) {
   try {
     const decoded = jwt.verify(token, config.get('jwtSecret'));
     req.user = decoded.user;
-    console.log(decoded);
     //decoded looks like this: {
     //  user: { id: '5e5568111d42581e1cb7451b' },
     //  iat: 1582655505,
