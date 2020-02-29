@@ -236,7 +236,7 @@ router.delete('/custprofile', auth, async (req, res) => {
 });
 
 //@route  PUT api/profile/proprofile/experience
-//@desc   Add profile experience
+//@desc   Add PROFESSIONAL profile experience
 //@access Private
 
 router.put(
@@ -292,14 +292,14 @@ router.put(
 );
 
 //@route  DELETE api/profile/proprofile/experience/:exp_id
-//@desc   Delete profile experience
+//@desc   Delete PROFESSIONAL profile experience
 //@access Private
 
 router.delete('/proprofile/experience/:exp_id', auth, async (req, res) => {
   try {
     //find the right proprofile
     const profile = await Proprofile.findOne({ user: req.user.id });
-    //Get remove index
+    //Get the desired experience to remove by exp_id using indexOf
     const removeIndex = profile.experience
       .map(item => item.id)
       .indexOf(req.params.exp_id);
@@ -311,5 +311,218 @@ router.delete('/proprofile/experience/:exp_id', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+//@route  PUT api/profile/proprofile/experience/:exp_id
+//@desc   Edit PROFESSIONAL profile experience
+//@access Private
+
+router.put(
+  '/proprofile/experience/:exp_id',
+  [
+    auth,
+    [
+      check('title', 'Title is required.')
+        .not()
+        .isEmpty(),
+      check('company', 'Company is required.')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required.')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
+
+    const exp = {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    };
+    try {
+      const profile = await Proprofile.findOneAndUpdate(
+        { user: req.user.id, 'experience._id': req.params.exp_id },
+        {
+          $set: {
+            // I don't want my experience id to change
+            'experience.$': { _id: req.params.exp_id, ...exp }
+          }
+        },
+        { new: true }
+      );
+      await profile.save();
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+//@route  PUT api/profile/proprofile/education
+//@desc   Add PROFESSIONAL profile education
+//@access Private
+
+router.put(
+  '/proprofile/education',
+  [
+    auth,
+    [
+      check('school', 'School is required.')
+        .not()
+        .isEmpty(),
+      check('qualification', 'Qualification is required.')
+        .not()
+        .isEmpty(),
+      check('fieldofstudy', 'Field of study is required.')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required.')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      school,
+      qualification,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
+
+    const newEdu = {
+      school,
+      qualification,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
+    };
+    try {
+      const profile = await Proprofile.findOne({ user: req.user.id });
+      profile.education.unshift(newEdu);
+      await profile.save();
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+//@route  DELETE api/profile/proprofile/education/:edu_id
+//@desc   Delete PROFESSIONAL profile education
+//@access Private
+
+router.delete('/proprofile/education/:edu_id', auth, async (req, res) => {
+  try {
+    //find the right proprofile
+    const profile = await Proprofile.findOne({ user: req.user.id });
+    //Get the desired education to remove by edu_id using indexOf
+    const removeIndex = profile.education
+      .map(item => item.id)
+      .indexOf(req.params.edu_id);
+    profile.education.splice(removeIndex, 1);
+    await profile.save();
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+//@route  PUT api/profile/proprofile/education/:edu_id
+//@desc   Edit PROFESSIONAL profile education
+//@access Private
+
+router.put(
+  '/proprofile/education/:edu_id',
+  [
+    auth,
+    [
+      check('school', 'School is required.')
+        .not()
+        .isEmpty(),
+      check('qualification', 'Qualification is required.')
+        .not()
+        .isEmpty(),
+      check('fieldofstudy', 'Field of study is required.')
+        .not()
+        .isEmpty(),
+      check('from', 'From date is required.')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const {
+      school,
+      qualification,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
+
+    const edu = {
+      school,
+      qualification,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
+    };
+    try {
+      const profile = await Proprofile.findOneAndUpdate(
+        { user: req.user.id, 'education._id': req.params.edu_id },
+        {
+          $set: {
+            // I don't want my education id to change
+            'education.$': { _id: req.params.edu_id, ...edu }
+          }
+        },
+        { new: true }
+      );
+      //console.log(profile.user);
+      //console.log(profile.education[0]._id);
+      await profile.save();
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;
