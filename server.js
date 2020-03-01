@@ -11,7 +11,7 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API running....'));
 
 app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/magazine', require('./routes/api/magazine'));
+app.use('/api/articles', require('./routes/api/articles'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/users', require('./routes/api/users'));
 
