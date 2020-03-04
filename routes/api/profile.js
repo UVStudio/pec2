@@ -484,6 +484,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    //assigning new info to edu object
     const {
       school,
       qualification,

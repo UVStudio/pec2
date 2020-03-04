@@ -280,4 +280,44 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 //@desc   Edit comment by Id
 //@access Private
 
+router.put(
+  '/comment/:id/:comment_id',
+  [
+    auth,
+    [
+      check('text', 'Text is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      const article = await Article.findById(req.params.id);
+      //pull out comment
+      const comment = article.comments.find(
+        comment => comment.id === req.params.comment_id
+      );
+      //Make sure comment exist
+      if (!comment) {
+        return res.status(404).json({ msg: 'Comment does not exist.' });
+      }
+      //check user
+      if (comment.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'User not authorized' });
+      }
+      //assign new text to text object
+      comment.text = req.body.text;
+      await article.save();
+      res.json(comment.text);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 module.exports = router;
