@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const Proprofile = require('../../models/Proprofile');
-const Custprofile = require('../../models/Custprofile');
-const { check, validationResult } = require('express-validator');
+const express = require('express')
+const router = express.Router()
+const auth = require('../../middleware/auth')
+const Proprofile = require('../../models/Proprofile')
+const Custprofile = require('../../models/Custprofile')
+const { check, validationResult } = require('express-validator')
 
 //@route  GET api/profile/me
 //@desc   Get current user's profile(s)
@@ -13,27 +13,27 @@ router.get('/me', auth, async (req, res) => {
   try {
     const proprofile = await Proprofile.findOne({
       user: req.user.id
-    }).populate('user', ['name', 'avatar']);
+    }).populate('user', ['name', 'avatar'])
 
     const custprofile = await Custprofile.findOne({
       user: req.user.id
-    }).populate('user', ['name', 'avatar']);
+    }).populate('user', ['name', 'avatar'])
 
     if (!proprofile && !custprofile) {
       return res
         .status(400)
-        .json({ msg: 'This user does not have a profile set up.' });
+        .json({ msg: 'This user does not have a profile set up.' })
     }
     //Fix later. Omit getting a profile if user does not have one
     res.json({
       professionalprofile: proprofile,
       customerprofile: custprofile
-    });
+    })
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  POST api/profile/proprofile
 //@desc   Create or update a user PROFESSIONAL profile
@@ -53,9 +53,9 @@ router.post(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
 
     const {
@@ -70,33 +70,31 @@ router.post(
       twitter,
       instagram,
       linkedin
-    } = req.body;
+    } = req.body
 
     //Build profile object
-    const profileFields = {};
-    profileFields.user = req.user.id;
+    const profileFields = {}
+    profileFields.user = req.user.id
 
-    if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
-    if (location) profileFields.location = location;
-    if (bio) profileFields.bio = bio;
-    if (status) profileFields.status = status;
+    if (company) profileFields.company = company
+    if (website) profileFields.website = website
+    if (location) profileFields.location = location
+    if (bio) profileFields.bio = bio
+    if (status) profileFields.status = status
     if (skills) {
-      profileFields.skills = skills.split(',').map(skill => skill.trim());
+      profileFields.skills = skills.split(',').map(skill => skill.trim())
     }
 
     //Build social object
-    profileFields.social = {};
-    if (youtube) profileFields.social.youtube = youtube;
-    if (twitter) profileFields.social.twitter = twitter;
-    if (facebook) profileFields.social.facebook = facebook;
-    if (linkedin) profileFields.social.linkedin = linkedin;
-    if (instagram) profileFields.social.instagram = instagram;
-
-    console.log(profileFields.social);
+    profileFields.social = {}
+    if (youtube) profileFields.social.youtube = youtube
+    if (twitter) profileFields.social.twitter = twitter
+    if (facebook) profileFields.social.facebook = facebook
+    if (linkedin) profileFields.social.linkedin = linkedin
+    if (instagram) profileFields.social.instagram = instagram
 
     try {
-      let profile = await Proprofile.findOne({ user: req.user.id });
+      let profile = await Proprofile.findOne({ user: req.user.id })
 
       if (profile) {
         //Update
@@ -104,23 +102,23 @@ router.post(
           { user: req.user.id },
           { $set: profileFields },
           { new: true }
-        );
-        return res.json(profile);
+        )
+        return res.json(profile)
       }
 
       //Create
-      console.log(profileFields);
-      profile = new Proprofile(profileFields);
-      await profile.save();
-      res.json(profile);
+      console.log(profileFields)
+      profile = new Proprofile(profileFields)
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
-module.exports = router;
+module.exports = router
 
 //@route  POST api/profile/custprofile
 //@desc   Create or update a user CUSTOMER profile
@@ -131,18 +129,18 @@ router.post(
   auth,
 
   async (req, res) => {
-    const { location, bio, facebook } = req.body;
+    const { location, bio, facebook } = req.body
 
     //Build profile object
-    const profileFields = {};
-    profileFields.user = req.user.id;
+    const profileFields = {}
+    profileFields.user = req.user.id
 
-    if (location) profileFields.location = location;
-    if (bio) profileFields.bio = bio;
-    if (facebook) profileFields.facebook = facebook;
+    if (location) profileFields.location = location
+    if (bio) profileFields.bio = bio
+    if (facebook) profileFields.facebook = facebook
 
     try {
-      let profile = await Custprofile.findOne({ user: req.user.id });
+      let profile = await Custprofile.findOne({ user: req.user.id })
 
       if (profile) {
         //Update
@@ -150,20 +148,20 @@ router.post(
           { user: req.user.id },
           { $set: profileFields },
           { new: true }
-        );
-        return res.json(profile);
+        )
+        return res.json(profile)
       }
 
       //Create
-      profile = new Custprofile(profileFields);
-      await profile.save();
-      res.json(profile);
+      profile = new Custprofile(profileFields)
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
 //@route  GET api/profile/proprofiles
 //@desc   Get all PROFESSIONAL profiles
@@ -171,13 +169,13 @@ router.post(
 
 router.get('/proprofiles', async (req, res) => {
   try {
-    const profiles = await Proprofile.find().populate('user', ['name']);
-    res.json(profiles);
+    const profiles = await Proprofile.find().populate('user', ['name'])
+    res.json(profiles)
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  GET api/profile/proprofile/user/:user_id
 //@desc   Get PROFESSIONAL profile by user Id
@@ -188,24 +186,22 @@ router.get('/proprofile/user/:user_id', async (req, res) => {
     //req.params.user_id is getting the id from the URL/path
     const profile = await Proprofile.findOne({
       user: req.params.user_id
-    }).populate('user', ['name']);
+    }).populate('user', ['name'])
     //console.log(req.params.user_id); logs URL id
     if (!profile) {
-      return res
-        .status(400)
-        .json({ msg: 'There is no profile for this user.' });
+      return res.status(400).json({ msg: 'There is no profile for this user.' })
     }
-    res.json(profile);
+    res.json(profile)
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message)
     if (err.kind == 'ObjectId') {
       return res
         .status(400)
-        .json({ msg: 'There is no profile for this user. (err.kind)' });
+        .json({ msg: 'There is no profile for this user. (err.kind)' })
     }
-    res.status(500).send('Server Error');
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  DELETE api/profile/proprofile
 //@desc   Delete user's PROFESSIONAL profile
@@ -213,13 +209,13 @@ router.get('/proprofile/user/:user_id', async (req, res) => {
 
 router.delete('/proprofile', auth, async (req, res) => {
   try {
-    await Proprofile.findOneAndRemove({ user: req.user.id });
-    res.json({ msg: 'Professional profile deleted' });
+    await Proprofile.findOneAndRemove({ user: req.user.id })
+    res.json({ msg: 'Professional profile deleted' })
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  DELETE api/profile/custprofile
 //@desc   Delete user's CUSTOMER profile
@@ -227,17 +223,18 @@ router.delete('/proprofile', auth, async (req, res) => {
 
 router.delete('/custprofile', auth, async (req, res) => {
   try {
-    await Custprofile.findOneAndRemove({ user: req.user.id });
-    res.json({ msg: 'Customer profile deleted' });
+    await Custprofile.findOneAndRemove({ user: req.user.id })
+    res.json({ msg: 'Customer profile deleted' })
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  PUT api/profile/proprofile/experience
 //@desc   Add PROFESSIONAL profile experience
 //@access Private
+//@date   Date in Postman is formatted as this: 01-20-2020 (Jan 20th 2020)
 
 router.put(
   '/proprofile/experience',
@@ -256,9 +253,9 @@ router.put(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
     const {
       title,
@@ -268,7 +265,7 @@ router.put(
       to,
       current,
       description
-    } = req.body;
+    } = req.body
 
     const newExp = {
       title,
@@ -278,18 +275,18 @@ router.put(
       to,
       current,
       description
-    };
+    }
     try {
-      const profile = await Proprofile.findOne({ user: req.user.id });
-      profile.experience.unshift(newExp);
-      await profile.save();
-      res.json(profile);
+      const profile = await Proprofile.findOne({ user: req.user.id })
+      profile.experience.unshift(newExp)
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
 //@route  DELETE api/profile/proprofile/experience/:exp_id
 //@desc   Delete PROFESSIONAL profile experience
@@ -298,19 +295,19 @@ router.put(
 router.delete('/proprofile/experience/:exp_id', auth, async (req, res) => {
   try {
     //find the right proprofile
-    const profile = await Proprofile.findOne({ user: req.user.id });
+    const profile = await Proprofile.findOne({ user: req.user.id })
     //Get the desired experience to remove by exp_id using indexOf
     const removeIndex = profile.experience
       .map(item => item.id)
-      .indexOf(req.params.exp_id);
-    profile.experience.splice(removeIndex, 1);
-    await profile.save();
-    res.json(profile);
+      .indexOf(req.params.exp_id)
+    profile.experience.splice(removeIndex, 1)
+    await profile.save()
+    res.json(profile)
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  PUT api/profile/proprofile/experience/:exp_id
 //@desc   Edit PROFESSIONAL profile experience
@@ -333,9 +330,9 @@ router.put(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
     const {
       title,
@@ -345,7 +342,7 @@ router.put(
       to,
       current,
       description
-    } = req.body;
+    } = req.body
 
     const exp = {
       title,
@@ -355,7 +352,7 @@ router.put(
       to,
       current,
       description
-    };
+    }
     try {
       const profile = await Proprofile.findOneAndUpdate(
         { user: req.user.id, 'experience._id': req.params.exp_id },
@@ -366,15 +363,15 @@ router.put(
           }
         },
         { new: true }
-      );
-      await profile.save();
-      res.json(profile);
+      )
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
 //@route  PUT api/profile/proprofile/education
 //@desc   Add PROFESSIONAL profile education
@@ -400,9 +397,9 @@ router.put(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
     const {
       school,
@@ -412,7 +409,7 @@ router.put(
       to,
       current,
       description
-    } = req.body;
+    } = req.body
 
     const newEdu = {
       school,
@@ -422,18 +419,18 @@ router.put(
       to,
       current,
       description
-    };
+    }
     try {
-      const profile = await Proprofile.findOne({ user: req.user.id });
-      profile.education.unshift(newEdu);
-      await profile.save();
-      res.json(profile);
+      const profile = await Proprofile.findOne({ user: req.user.id })
+      profile.education.unshift(newEdu)
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
 //@route  DELETE api/profile/proprofile/education/:edu_id
 //@desc   Delete PROFESSIONAL profile education
@@ -442,19 +439,19 @@ router.put(
 router.delete('/proprofile/education/:edu_id', auth, async (req, res) => {
   try {
     //find the right proprofile
-    const profile = await Proprofile.findOne({ user: req.user.id });
+    const profile = await Proprofile.findOne({ user: req.user.id })
     //Get the desired education to remove by edu_id using indexOf
     const removeIndex = profile.education
       .map(item => item.id)
-      .indexOf(req.params.edu_id);
-    profile.education.splice(removeIndex, 1);
-    await profile.save();
-    res.json(profile);
+      .indexOf(req.params.edu_id)
+    profile.education.splice(removeIndex, 1)
+    await profile.save()
+    res.json(profile)
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 //@route  PUT api/profile/proprofile/education/:edu_id
 //@desc   Edit PROFESSIONAL profile education
@@ -480,9 +477,9 @@ router.put(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() })
     }
     //assigning new info to edu object
     const {
@@ -493,7 +490,7 @@ router.put(
       to,
       current,
       description
-    } = req.body;
+    } = req.body
 
     const edu = {
       school,
@@ -503,7 +500,7 @@ router.put(
       to,
       current,
       description
-    };
+    }
     try {
       const profile = await Proprofile.findOneAndUpdate(
         { user: req.user.id, 'education._id': req.params.edu_id },
@@ -514,16 +511,16 @@ router.put(
           }
         },
         { new: true }
-      );
+      )
       //console.log(profile.user);
       //console.log(profile.education[0]._id);
-      await profile.save();
-      res.json(profile);
+      await profile.save()
+      res.json(profile)
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      console.error(err.message)
+      res.status(500).send('Server Error')
     }
   }
-);
+)
 
-module.exports = router;
+module.exports = router
