@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const ProprofileSchema = new mongoose.Schema({
   //connecting to _id field in user from mongoDB
@@ -103,10 +103,24 @@ const ProprofileSchema = new mongoose.Schema({
       type: String
     }
   },
+  ratings: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+      },
+      rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now
   }
-});
+})
 
-module.exports = Proprofile = mongoose.model('proprofile', ProprofileSchema);
+module.exports = Proprofile = mongoose.model('proprofile', ProprofileSchema)
