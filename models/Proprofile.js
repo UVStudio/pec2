@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const ProprofileSchema = new mongoose.Schema({
   //connecting to _id field in user from mongoDB
@@ -121,6 +121,6 @@ const ProprofileSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
-module.exports = Proprofile = mongoose.model('proprofile', ProprofileSchema)
+module.exports = Proprofile = mongoose.model('proprofile', ProprofileSchema);

@@ -4,6 +4,9 @@ const auth = require('../../middleware/auth');
 const Proprofile = require('../../models/Proprofile');
 const Custprofile = require('../../models/Custprofile');
 const { check, validationResult } = require('express-validator');
+const upload = require('../../config/conn');
+
+const app = express();
 
 //@route  GET api/profile/me
 //@desc   Get current user's profile(s)
