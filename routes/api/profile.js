@@ -4,9 +4,6 @@ const auth = require('../../middleware/auth');
 const Proprofile = require('../../models/Proprofile');
 const Custprofile = require('../../models/Custprofile');
 const { check, validationResult } = require('express-validator');
-const upload = require('../../config/conn');
-
-const app = express();
 
 //@route  GET api/profile/me
 //@desc   Get current user's profile(s)
@@ -14,14 +11,8 @@ const app = express();
 
 router.get('/me', auth, async (req, res) => {
   try {
-    const proprofile = await Proprofile.findOne({
-      user: req.user.id
-    }).populate('user', ['name', 'avatar']);
-
-    const custprofile = await Custprofile.findOne({
-      user: req.user.id
-    }).populate('user', ['name', 'avatar']);
-
+    const proprofile = await Proprofile.findOne({ user: req.user.id });
+    const custprofile = await Custprofile.findOne({ user: req.user.id });
     if (!proprofile && !custprofile) {
       return res
         .status(400)

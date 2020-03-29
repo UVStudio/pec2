@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
@@ -6,6 +7,38 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../../middleware/auth');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  //reject file
+
+  if (
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg'
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error('Wrong file type'), false);
+  }
+};
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter
+});
 
 //@route  POST api/users
 //@desc   Register user
@@ -15,6 +48,7 @@ const auth = require('../../middleware/auth');
 router.post(
   '/',
   [
+    upload.single('avatar'),
     check('name', 'Name is required')
       .not()
       .isEmpty(),
@@ -25,6 +59,7 @@ router.post(
     ).isLength({ min: 6 })
   ],
   async (req, res) => {
+    console.log(req.file);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -34,6 +69,15 @@ router.post(
     //req.body.name, req.body.email,... etc
     const { name, email, password } = req.body;
 
+    //saving avatar to mongodb
+    const img = fs.readFileSync(req.file.path);
+    const encode_img = img.toString('base64');
+    const finalImg = {
+      contentType: req.file.mimetype,
+      path: req.file.path,
+      image: new Buffer(encode_img, 'base64')
+    };
+    console.log(finalImg);
     //check if user exists already
     try {
       let user = await User.findOne({ email });
@@ -46,15 +90,17 @@ router.post(
       user = new User({
         name,
         email,
-        password
+        password,
+        avatar: req.file.path
       });
       //hash password before saving to mongoDB
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
+      //console.log(user);
       await user.save();
 
       //create JWT to allow user to stay signed in
-      // payload = { user: { id: '5efasfgq454qtrgafs' } } - the user id in mongoDB. the _ in front of id is not needed by mongoose
+      //payload = { user: { id: '5efasfgq454qtrgafs' } } - the user id in mongoDB. the _ in front of id is not needed by mongoose
       const payload = {
         user: {
           id: user.id
@@ -67,7 +113,7 @@ router.post(
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, user });
         }
       );
     } catch (err) {
