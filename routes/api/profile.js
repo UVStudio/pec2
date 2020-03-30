@@ -10,6 +10,7 @@ const { check, validationResult } = require('express-validator');
 //@access Private
 
 router.get('/me', auth, async (req, res) => {
+  console.log('user id: ' + req.user.id);
   try {
     const proprofile = await Proprofile.findOne({ user: req.user.id });
     const custprofile = await Custprofile.findOne({ user: req.user.id });
@@ -508,8 +509,6 @@ router.put(
         },
         { new: true }
       );
-      //console.log(profile.user);
-      //console.log(profile.education[0]._id);
       await profile.save();
       res.json(profile);
     } catch (err) {

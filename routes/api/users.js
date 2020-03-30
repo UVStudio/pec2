@@ -49,14 +49,16 @@ router.post(
   '/',
   [
     upload.single('avatar'),
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
-    check(
-      'password',
-      'Please enter a password with 6 or more characters.'
-    ).isLength({ min: 6 })
+    [
+      check('name', 'Name is required')
+        .not()
+        .isEmpty(),
+      check('email', 'Please include a valid email').isEmail(),
+      check(
+        'password',
+        'Please enter a password with 6 or more characters.'
+      ).isLength({ min: 6 })
+    ]
   ],
   async (req, res) => {
     console.log(req.file);
@@ -68,16 +70,11 @@ router.post(
     //if validation passes
     //req.body.name, req.body.email,... etc
     const { name, email, password } = req.body;
+    let avatar;
+    if (req.file !== undefined) {
+      avatar = req.file.path;
+    }
 
-    //saving avatar to mongodb
-    const img = fs.readFileSync(req.file.path);
-    const encode_img = img.toString('base64');
-    const finalImg = {
-      contentType: req.file.mimetype,
-      path: req.file.path,
-      image: new Buffer(encode_img, 'base64')
-    };
-    console.log(finalImg);
     //check if user exists already
     try {
       let user = await User.findOne({ email });
@@ -91,7 +88,7 @@ router.post(
         name,
         email,
         password,
-        avatar: req.file.path
+        avatar
       });
       //hash password before saving to mongoDB
       const salt = await bcrypt.genSalt(10);
@@ -123,9 +120,79 @@ router.post(
   }
 );
 
-//@route  POST api/users/:id/
-//@desc   Uploads avatar pic to user Id
+//@route  GET api/users/me
+//@desc   Get current logged in user
 //@access private
+
+router.get('/me', auth, async (req, res) => {
+  //why req.user object has no other properties except id???
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    if (user) {
+      res.json({ user });
+    }
+    console.log(req.body);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+//@route  PUT api/users/:id/
+//@desc   Update user info by id
+//@access private
+
+router.put(
+  '/:id',
+  [
+    auth,
+    upload.single('avatar'),
+    [
+      check('name', 'Name is required')
+        .not()
+        .isEmpty(),
+      check('email', 'Please include a valid email').isEmail(),
+      check(
+        'password',
+        'Please enter a password with 6 or more characters.'
+      ).isLength({ min: 6 })
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, password } = req.body;
+
+    let avatar;
+    if (req.file !== undefined) {
+      avatar = req.file.path;
+    }
+    const info = { name, email, password, avatar };
+
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {
+            _id: req.params.id,
+            ...info
+          }
+        },
+        { new: true }
+      );
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+      await user.save();
+      res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 //@route  DELETE api/users
 //@desc   Delete user
