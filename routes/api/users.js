@@ -40,7 +40,7 @@ const upload = multer({
 });
 
 //@route  POST api/users
-//@desc   Register user
+//@desc   Register user, info and avatar
 //@access Public
 
 //make sure it passes validation
@@ -71,6 +71,8 @@ router.post(
     let avatar;
     if (req.file !== undefined) {
       avatar = req.file.path;
+    } else {
+      avatar = null;
     }
 
     //check if user exists already
@@ -118,6 +120,31 @@ router.post(
   }
 );
 
+//@route  POST api/users/avatar/:id
+//@desc   Upload user's avatar by Id
+//@access private
+
+router.post(
+  '/avatar',
+  auth,
+  upload.single('avatar'),
+  async (req, res, next) => {
+    try {
+      const avatar = req.file.path;
+      const user = await User.findOne({ _id: req.user.id });
+
+      user.avatar = avatar;
+      console.log(user);
+      await user.save();
+      res.json({ user });
+      next();
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send('Server error');
+    }
+  }
+);
+
 //@route  GET api/users/me
 //@desc   Get current logged in user
 //@access private
@@ -136,12 +163,30 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+//@route  DELETE api/users/avatar
+//@desc   Delete user avatar
+//@access private
+
+router.delete('/avatar', auth, async (req, res) => {
+  //why req.user object has no other properties except id???
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    user.avatar = null;
+
+    res.json({ user });
+    await user.save();
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 //@route  PUT api/users/:id/
-//@desc   Update user info by id
+//@desc   Update user info, including avatar
 //@access private
 
 router.put(
-  '/:id',
+  '/',
   [
     auth,
     upload.single('avatar'),
@@ -172,10 +217,10 @@ router.put(
 
     try {
       const user = await User.findOneAndUpdate(
-        { _id: req.params.id },
+        { _id: req.user.id },
         {
           $set: {
-            _id: req.params.id,
+            _id: req.user.id,
             ...info
           }
         },
