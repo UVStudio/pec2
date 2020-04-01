@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
@@ -61,7 +60,6 @@ router.post(
     ]
   ],
   async (req, res) => {
-    console.log(req.file);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

@@ -1,6 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 const Prologin = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
   return (
     <Fragment>
       <div className="alert alert-danger">Invalid credentials</div>
@@ -14,11 +24,19 @@ const Prologin = () => {
             type="email"
             placeholder="Email Address"
             name="email"
+            value={email}
+            onChange={e => onChange(e)}
             required
           />
         </div>
         <div className="form-group">
-          <input type="password" placeholder="Password" name="password" />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={e => onChange(e)}
+          />
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />
       </form>
