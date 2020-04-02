@@ -40,24 +40,21 @@ const upload = multer({
 });
 
 //@route  POST api/users
-//@desc   Register user, info and avatar
+//@desc   Register user info
 //@access Public
 
 //make sure it passes validation
 router.post(
   '/',
   [
-    upload.single('avatar'),
-    [
-      check('name', 'Name is required')
-        .not()
-        .isEmpty(),
-      check('email', 'Please include a valid email').isEmail(),
-      check(
-        'password',
-        'Please enter a password with 6 or more characters.'
-      ).isLength({ min: 6 })
-    ]
+    check('name', 'Name is required')
+      .not()
+      .isEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check(
+      'password',
+      'Please enter a password with 6 or more characters.'
+    ).isLength({ min: 6 })
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -68,12 +65,6 @@ router.post(
     //if validation passes
     //req.body.name, req.body.email,... etc
     const { name, email, password } = req.body;
-    let avatar;
-    if (req.file !== undefined) {
-      avatar = req.file.path;
-    } else {
-      avatar = null;
-    }
 
     //check if user exists already
     try {
@@ -87,8 +78,7 @@ router.post(
       user = new User({
         name,
         email,
-        password,
-        avatar
+        password
       });
       //hash password before saving to mongoDB
       const salt = await bcrypt.genSalt(10);
@@ -113,31 +103,6 @@ router.post(
           res.json({ token, user });
         }
       );
-    } catch (err) {
-      console.log(err.message);
-      return res.status(500).send('Server error');
-    }
-  }
-);
-
-//@route  POST api/users/avatar/:id
-//@desc   Upload user's avatar by Id
-//@access private
-
-router.post(
-  '/avatar',
-  auth,
-  upload.single('avatar'),
-  async (req, res, next) => {
-    try {
-      const avatar = req.file.path;
-      const user = await User.findOne({ _id: req.user.id });
-
-      user.avatar = avatar;
-      console.log(user);
-      await user.save();
-      res.json({ user });
-      next();
     } catch (err) {
       console.log(err.message);
       return res.status(500).send('Server error');

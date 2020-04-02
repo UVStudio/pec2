@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import Avatar from './Avatar';
 import axios from 'axios';
 
 const Proregister = () => {
@@ -9,17 +10,12 @@ const Proregister = () => {
     password2: ''
   });
 
-  const [avatar, setAvatar] = useState('');
-  const [avatarName, setAvatarName] = useState('no file selected');
-
   const { name, email, password, password2 } = formData;
 
   //[e.target.name] targets the key name, not the value name. onChange() would
   //work for all fields
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setAvatar(e.target.files[0]);
-    setAvatarName(e.target.files[0].name);
   };
 
   const onSubmit = async e => {
@@ -53,20 +49,7 @@ const Proregister = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Professional Account
       </p>
-      <form>
-        <div className="avatar-upload">
-          <input
-            type="file"
-            className="avatar-upload-label"
-            id="customAvatar"
-            onChange={onChange}
-          />
-          <label className="avatar-upload-label" htmlFor="customAvatar">
-            {avatarName}
-          </label>
-          <input type="submit" value="Upload" className="" />
-        </div>
-      </form>
+      <Avatar />
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input
