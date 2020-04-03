@@ -13,6 +13,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  avatarId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'uploads.files'
+  },
   date: {
     type: Date,
     default: Date.now

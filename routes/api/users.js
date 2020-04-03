@@ -6,38 +6,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../../middleware/auth');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  //reject file
-
-  if (
-    file.mimetype === 'image/jpeg' ||
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg'
-  ) {
-    cb(null, true);
-  } else {
-    cb(new Error('Wrong file type'), false);
-  }
-};
-
-const upload = multer({
-  storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter
-});
 
 //@route  POST api/users
 //@desc   Register user info
@@ -128,24 +96,6 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-//@route  DELETE api/users/avatar
-//@desc   Delete user avatar
-//@access private
-
-router.delete('/avatar', auth, async (req, res) => {
-  //why req.user object has no other properties except id???
-  try {
-    const user = await User.findOne({ _id: req.user.id });
-    user.avatar = null;
-
-    res.json({ user });
-    await user.save();
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
 //@route  PUT api/users/:id/
 //@desc   Update user info, including avatar
 //@access private
@@ -154,16 +104,15 @@ router.put(
   '/',
   [
     auth,
-    upload.single('avatar'),
     [
-      check('name', 'Name is required')
+      (check('name', 'Name is required')
         .not()
         .isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
       check(
         'password',
         'Please enter a password with 6 or more characters.'
-      ).isLength({ min: 6 })
+      ).isLength({ min: 6 }))
     ]
   ],
   async (req, res) => {

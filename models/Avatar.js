@@ -5,6 +5,14 @@ const AvatarSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true
+  },
+  image: {
+    data: Buffer,
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

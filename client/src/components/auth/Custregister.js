@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import Avatar from '../auth/Proregister';
 
 const Custregister = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,7 @@ const Custregister = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>
+      <Avatar />
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input

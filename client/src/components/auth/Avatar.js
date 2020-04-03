@@ -14,24 +14,18 @@ const Avatar = () => {
   const onSubmit = async e => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('avatar', avatar);
-    console.log(formData);
-    console.log(avatar);
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    };
+    formData.append('file', avatar);
+
     try {
-      const res = await axios.post('./uploads', formData, config);
+      const res = await axios.post('api/avatar/upload', formData);
       const { fileName, filePath } = res.data;
-      console.log(res.data);
       setUploadedFile({ fileName, filePath });
+      console.log('good');
     } catch (err) {
       if (err.response.status === 500) {
         console.log('There was a problem with the server.');
       } else {
-        console.log(err.response.data.msg);
+        console.log(err.response);
       }
     }
   };
@@ -42,6 +36,7 @@ const Avatar = () => {
         <div className="avatar-upload">
           <input
             type="file"
+            name="file"
             className="avatar-upload-label"
             id="customAvatar"
             onChange={onChange}
