@@ -36,12 +36,12 @@ const storage = new GridFsStorage({
         const fileInfo = {
           filename: filename,
           //the bucketName needs to match the collection name
-          bucketName: 'uploads'
+          bucketName: 'uploads',
         };
         res(fileInfo);
       });
     });
-  }
+  },
 });
 const upload = multer({ storage });
 
@@ -78,7 +78,7 @@ router.get('/files', (req, res) => {
     // Check if files exist
     if (!files || files.length === 0) {
       return res.status(404).json({
-        err: 'No files exist'
+        err: 'No files exist',
       });
     }
     return res.json(files);
@@ -93,7 +93,7 @@ router.get('/files/:filename', (req, res) => {
     // Check if files exist
     if (!file || file.length === 0) {
       return res.status(404).json({
-        err: 'No file exists'
+        err: 'No file exists for this',
       });
     }
     return res.json(file);
@@ -108,7 +108,7 @@ router.get('/image/:filename', (req, res) => {
     // Check if files exist
     if (!file || file.length === 0) {
       return res.status(404).json({
-        err: 'No file exists'
+        err: 'No file exists',
       });
     }
     if (
