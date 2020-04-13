@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from './Avatar';
 import axios from 'axios';
 
@@ -7,18 +8,18 @@ const Proregister = () => {
     name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { name, email, password, password2 } = formData;
 
   //[e.target.name] targets the key name, not the value name. onChange() would
   //work for all fields
-  const onChange = e => {
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log('Passwords do not match');
@@ -26,13 +27,13 @@ const Proregister = () => {
       const newUser = {
         name,
         email,
-        password
+        password,
       };
       try {
         const config = {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         };
         const body = JSON.stringify(newUser);
         const res = await axios.post('/api/users', body, config);
@@ -50,14 +51,14 @@ const Proregister = () => {
         <i className="fas fa-user"></i> Create Your Professional Account
       </p>
       <Avatar />
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
             placeholder="Name"
             name="name"
             value={name}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -67,7 +68,7 @@ const Proregister = () => {
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a
@@ -80,7 +81,7 @@ const Proregister = () => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             minLength="6"
           />
         </div>
@@ -90,14 +91,14 @@ const Proregister = () => {
             placeholder="Confirm Password"
             name="password2"
             password={password2}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             minLength="6"
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <a href="pro-login.html">Sign In</a>
+        Already have an account? <Link to="/pro-login">Sign In</Link>
       </p>
     </Fragment>
   );

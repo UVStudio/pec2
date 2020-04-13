@@ -1,22 +1,22 @@
 import React, { Fragment, useState } from 'react';
-import Avatar from '../auth/Proregister';
+import Avatar from './Avatar';
 
 const Custregister = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { name, email, password, password2 } = formData;
 
   //[e.target.name] targets the key name, not the value name. onChange() would
   //work for all fields
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log('Passwords do not match');
@@ -32,14 +32,14 @@ const Custregister = () => {
         <i className="fas fa-user"></i> Create Your Account
       </p>
       <Avatar />
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
             placeholder="Name"
             name="name"
             value={name}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -49,7 +49,7 @@ const Custregister = () => {
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             required
           />
           <small className="form-text">
@@ -63,7 +63,7 @@ const Custregister = () => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             minLength="6"
           />
         </div>
@@ -73,7 +73,7 @@ const Custregister = () => {
             placeholder="Confirm Password"
             name="password2"
             value={password2}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             minLength="6"
           />
         </div>
