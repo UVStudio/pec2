@@ -9,8 +9,12 @@ import Custregister from './components/auth/Custregister';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
+import Alert from './components/layout/Alert';
+
+//redux
 import { Provider } from 'react-redux';
 import store from './store';
+
 import './App.css';
 
 const App = () => (
@@ -20,6 +24,7 @@ const App = () => (
         <NavBar />
         <Route exact path="/" component={Landing} />
         <section className="container">
+          <Alert />
           <Switch>
             <Route exact path="/pro-login" component={Prologin} />
             <Route exact path="/pro-register" component={Proregister} />
