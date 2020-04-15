@@ -3,17 +3,16 @@ import React, { Fragment, useState } from 'react';
 const Custlogin = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const { email, password } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <Fragment>
-      <div className="alert alert-danger">Invalid credentials</div>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Sign into Your Account
@@ -25,7 +24,7 @@ const Custlogin = () => {
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             required
           />
         </div>
@@ -35,7 +34,7 @@ const Custlogin = () => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />
