@@ -6,6 +6,7 @@ import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
+import Usercontrol from './components/auth/Usercontrol';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -42,6 +43,7 @@ const App = () => {
               <Route exact path="/pro-register" component={Proregister} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
+              <Route exact path="/user-control" component={Usercontrol} />
               <Route exact path="/about" component={About} />
               <Route exact path="/articles" component={Articles} />
               <Route exact path="/search" component={Search} />
