@@ -4,13 +4,16 @@ import NavBar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
+import Proprofile from './components/auth/Proprofile';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
+import Custprofile from './components/auth/Custprofile';
 import Usercontrol from './components/auth/Usercontrol';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
 import Alert from './components/layout/Alert';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 //redux
 import { Provider } from 'react-redux';
@@ -41,9 +44,15 @@ const App = () => {
             <Switch>
               <Route exact path="/pro-login" component={Prologin} />
               <Route exact path="/pro-register" component={Proregister} />
+              <Route exact path="/pro-profile" component={Proprofile} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
-              <Route exact path="/user-control" component={Usercontrol} />
+              <Route exact path="/cust-profile" component={Custprofile} />
+              <PrivateRoute
+                exact
+                path="/user-control"
+                component={Usercontrol}
+              />
               <Route exact path="/about" component={About} />
               <Route exact path="/articles" component={Articles} />
               <Route exact path="/search" component={Search} />
