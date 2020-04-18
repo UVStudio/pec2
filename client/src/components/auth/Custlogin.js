@@ -21,7 +21,7 @@ const Custlogin = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/user-control" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (

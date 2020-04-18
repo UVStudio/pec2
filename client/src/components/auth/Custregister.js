@@ -35,7 +35,7 @@ const Custregister = ({ setAlert, auth, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/user-control" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (

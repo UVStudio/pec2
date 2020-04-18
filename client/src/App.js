@@ -9,6 +9,7 @@ import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
 import Usercontrol from './components/layout/Usercontrol';
+import Dashboard from './components/dashboard/Dashboard';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -48,6 +49,8 @@ const App = () => {
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
               <Route exact path="/cust-profile" component={Custprofile} />
+              <Route exact path="/dashboard" component={Dashboard} />
+
               <PrivateRoute
                 exact
                 path="/user-control"

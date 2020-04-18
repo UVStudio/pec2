@@ -22,7 +22,7 @@ const Prologin = ({ login, isAuthenticated }) => {
 
   //redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to="/user-control" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
