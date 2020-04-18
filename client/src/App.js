@@ -8,7 +8,7 @@ import Proprofile from './components/auth/Proprofile';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
-import Usercontrol from './components/auth/Usercontrol';
+import Usercontrol from './components/layout/Usercontrol';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';

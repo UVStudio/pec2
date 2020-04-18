@@ -65,7 +65,7 @@ Custlogin.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.register.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Custlogin);

@@ -1,7 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrentProfile } from '../../actions/profile';
 
-const Usercontrol = () => {
+const Usercontrol = ({ getCurrentProfile, auth, profile }) => {
+  useEffect(() => {
+    getCurrentProfile();
+  }, []);
+
   return (
     <Fragment>
       <h1 className="large text-primary">User Information</h1>
@@ -54,4 +61,15 @@ const Usercontrol = () => {
   );
 };
 
-export default Usercontrol;
+Usercontrol.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.register,
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, { getCurrentProfile })(Usercontrol);

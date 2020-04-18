@@ -25,7 +25,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.register,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

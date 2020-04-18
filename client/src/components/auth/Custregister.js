@@ -2,11 +2,11 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-import { register } from '../../actions/auth';
+import { auth } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import Avatar from './Avatar';
+import Avatar from '../layout/Avatar';
 
-const Custregister = ({ setAlert, register, isAuthenticated }) => {
+const Custregister = ({ setAlert, auth, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,7 +26,7 @@ const Custregister = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({
+      auth({
         name,
         email,
         password,
@@ -97,12 +97,12 @@ const Custregister = ({ setAlert, register, isAuthenticated }) => {
 
 Custregister.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
+  auth: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.register.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Custregister);
+export default connect(mapStateToProps, { setAlert, auth })(Custregister);

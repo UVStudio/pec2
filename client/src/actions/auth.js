@@ -31,7 +31,7 @@ export const loadUser = () => async (dispatch) => {
 };
 
 //Register User
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const auth = ({ name, email, password }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-//LOGOUT / Clear profil
+//LOGOUT / Clear profile
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
 };
