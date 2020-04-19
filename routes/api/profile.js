@@ -10,7 +10,6 @@ const { check, validationResult } = require('express-validator');
 //@access Private
 
 router.get('/me', auth, async (req, res) => {
-  console.log('user id: ' + req.user.id);
   try {
     const proprofile = await Proprofile.findOne({ user: req.user.id });
     const custprofile = await Custprofile.findOne({ user: req.user.id });
@@ -22,7 +21,7 @@ router.get('/me', auth, async (req, res) => {
     //Fix later. Omit getting a profile if user does not have one
     res.json({
       professionalprofile: proprofile,
-      customerprofile: custprofile
+      customerprofile: custprofile,
     });
   } catch (err) {
     console.error(err.message);
@@ -39,13 +38,9 @@ router.post(
   [
     auth,
     [
-      check('status', 'Status is required')
-        .not()
-        .isEmpty(),
-      check('skills', 'Skills is required.')
-        .not()
-        .isEmpty()
-    ]
+      check('status', 'Status is required').not().isEmpty(),
+      check('skills', 'Skills is required.').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -64,7 +59,7 @@ router.post(
       facebook,
       twitter,
       instagram,
-      linkedin
+      linkedin,
     } = req.body;
 
     //Build profile object
@@ -77,7 +72,7 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (skills) {
-      profileFields.skills = skills.split(',').map(skill => skill.trim());
+      profileFields.skills = skills.split(',').map((skill) => skill.trim());
     }
 
     //Build social object
@@ -180,7 +175,7 @@ router.get('/proprofile/user/:user_id', async (req, res) => {
   try {
     //req.params.user_id is getting the id from the URL/path
     const profile = await Proprofile.findOne({
-      user: req.params.user_id
+      user: req.params.user_id,
     }).populate('user', ['name']);
     //console.log(req.params.user_id); logs URL id
     if (!profile) {
@@ -238,16 +233,10 @@ router.put(
   [
     auth,
     [
-      check('title', 'Title is required.')
-        .not()
-        .isEmpty(),
-      check('company', 'Company is required.')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required.')
-        .not()
-        .isEmpty()
-    ]
+      check('title', 'Title is required.').not().isEmpty(),
+      check('company', 'Company is required.').not().isEmpty(),
+      check('from', 'From date is required.').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -261,7 +250,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     } = req.body;
 
     const newExp = {
@@ -271,7 +260,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     };
     try {
       const profile = await Proprofile.findOne({ user: req.user.id });
@@ -295,7 +284,7 @@ router.delete('/proprofile/experience/:exp_id', auth, async (req, res) => {
     const profile = await Proprofile.findOne({ user: req.user.id });
     //Get the desired experience to remove by exp_id using indexOf
     const removeIndex = profile.experience
-      .map(item => item.id)
+      .map((item) => item.id)
       .indexOf(req.params.exp_id);
     profile.experience.splice(removeIndex, 1);
     await profile.save();
@@ -315,16 +304,10 @@ router.put(
   [
     auth,
     [
-      check('title', 'Title is required.')
-        .not()
-        .isEmpty(),
-      check('company', 'Company is required.')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required.')
-        .not()
-        .isEmpty()
-    ]
+      check('title', 'Title is required.').not().isEmpty(),
+      check('company', 'Company is required.').not().isEmpty(),
+      check('from', 'From date is required.').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -338,7 +321,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     } = req.body;
 
     const exp = {
@@ -348,7 +331,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     };
     try {
       const profile = await Proprofile.findOneAndUpdate(
@@ -356,8 +339,8 @@ router.put(
         {
           $set: {
             // I don't want my experience id to change
-            'experience.$': { _id: req.params.exp_id, ...exp }
-          }
+            'experience.$': { _id: req.params.exp_id, ...exp },
+          },
         },
         { new: true }
       );
@@ -379,19 +362,11 @@ router.put(
   [
     auth,
     [
-      check('school', 'School is required.')
-        .not()
-        .isEmpty(),
-      check('qualification', 'Qualification is required.')
-        .not()
-        .isEmpty(),
-      check('fieldofstudy', 'Field of study is required.')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required.')
-        .not()
-        .isEmpty()
-    ]
+      check('school', 'School is required.').not().isEmpty(),
+      check('qualification', 'Qualification is required.').not().isEmpty(),
+      check('fieldofstudy', 'Field of study is required.').not().isEmpty(),
+      check('from', 'From date is required.').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -405,7 +380,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     } = req.body;
 
     const newEdu = {
@@ -415,7 +390,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     };
     try {
       const profile = await Proprofile.findOne({ user: req.user.id });
@@ -439,7 +414,7 @@ router.delete('/proprofile/education/:edu_id', auth, async (req, res) => {
     const profile = await Proprofile.findOne({ user: req.user.id });
     //Get the desired education to remove by edu_id using indexOf
     const removeIndex = profile.education
-      .map(item => item.id)
+      .map((item) => item.id)
       .indexOf(req.params.edu_id);
     profile.education.splice(removeIndex, 1);
     await profile.save();
@@ -459,19 +434,11 @@ router.put(
   [
     auth,
     [
-      check('school', 'School is required.')
-        .not()
-        .isEmpty(),
-      check('qualification', 'Qualification is required.')
-        .not()
-        .isEmpty(),
-      check('fieldofstudy', 'Field of study is required.')
-        .not()
-        .isEmpty(),
-      check('from', 'From date is required.')
-        .not()
-        .isEmpty()
-    ]
+      check('school', 'School is required.').not().isEmpty(),
+      check('qualification', 'Qualification is required.').not().isEmpty(),
+      check('fieldofstudy', 'Field of study is required.').not().isEmpty(),
+      check('from', 'From date is required.').not().isEmpty(),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -486,7 +453,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     } = req.body;
 
     const edu = {
@@ -496,7 +463,7 @@ router.put(
       from,
       to,
       current,
-      description
+      description,
     };
     try {
       const profile = await Proprofile.findOneAndUpdate(
@@ -504,8 +471,8 @@ router.put(
         {
           $set: {
             // I don't want my education id to change
-            'education.$': { _id: req.params.edu_id, ...edu }
-          }
+            'education.$': { _id: req.params.edu_id, ...edu },
+          },
         },
         { new: true }
       );
@@ -524,14 +491,7 @@ router.put(
 
 router.put(
   '/proprofile/:id/rating',
-  [
-    auth,
-    [
-      check('rating', 'Rating is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('rating', 'Rating is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -542,8 +502,9 @@ router.put(
       const profile = await Proprofile.findOne({ user: req.params.id });
       //check to see if article has already been liked by user
       if (
-        profile.ratings.filter(rating => rating.user.toString() === req.user.id)
-          .length > 0
+        profile.ratings.filter(
+          (rating) => rating.user.toString() === req.user.id
+        ).length > 0
       ) {
         return res.status(400).json({ msg: 'You rated this profile already.' });
       }

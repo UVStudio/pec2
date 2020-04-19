@@ -1,8 +1,7 @@
 import axios from 'axios';
-import setAlert from './alert';
 import { GET_PROFILE, PROFILE_ERROR } from './types';
 
-//GET current users profile
+//GET current users profiles
 
 export const getCurrentProfile = () => async (dispatch) => {
   try {

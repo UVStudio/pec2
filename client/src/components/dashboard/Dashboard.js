@@ -2,18 +2,38 @@ import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({ getCurrentProfile, auth, profile }) => {
+const Dashboard = ({
+  getCurrentProfile,
+  auth: { user },
+  profile: { profile, loading },
+}) => {
   useEffect(() => {
     getCurrentProfile();
   }, []);
 
-  return (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
     <Fragment>
-      <div>
-        <h1>dashboard</h1>
-      </div>
+      <h1 className="large text-primary">Dashboard</h1>
+      <p className="lead">Welcome {user && user.name}</p>
+      {profile !== null ? (
+        <Fragment>has</Fragment>
+      ) : (
+        <Fragment>
+          You have not yet setup either a professional profile, or a customer
+          profile. Please add some info.
+          <Link to="/proprofile-setup" className="btn btn-primary my-1">
+            Create Professional Profile
+          </Link>
+          <Link to="/custprofile-setup" className="btn btn-primary my-1">
+            Create Customer Profile
+          </Link>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
@@ -25,7 +45,7 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.register,
+  auth: state.auth,
   profile: state.profile,
 });
 
