@@ -20,20 +20,52 @@ const Dashboard = ({
     <Fragment>
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">Welcome {user && user.name}</p>
-      {profile !== null ? (
-        <Fragment>has</Fragment>
+
+      {
+        /*profile.professionalprofile !== null &&
+      profile.customerprofile !== null ? (
+        <Fragment>You have both profiles</Fragment>
+      ) : profile.customerprofile !== null ? (
+        <Fragment>You have a customer profile</Fragment>
+      ) : profile.professionalprofile !== null ? (
+        <Fragment>You have a pro profile</Fragment>
       ) : (
-        <Fragment>
-          You have not yet setup either a professional profile, or a customer
-          profile. Please add some info.
-          <Link to="/proprofile-setup" className="btn btn-primary my-1">
-            Create Professional Profile
-          </Link>
-          <Link to="/custprofile-setup" className="btn btn-primary my-1">
-            Create Customer Profile
-          </Link>
-        </Fragment>
-      )}
+        <Fragment>You have no profile.</Fragment>
+      )*/
+        profile == null ? (
+          <Fragment>
+            You don't have any profiles
+            <br></br>
+            <Link to="/create-pro-profile" className="btn btn-primary my-1">
+              Create Professional Profile
+            </Link>
+            <Link to="/create-cust-profile" className="btn btn-primary my-1">
+              Create Customer Profile
+            </Link>
+          </Fragment>
+        ) : profile.professionalprofile && profile.customerprofile ? (
+          <Fragment>You have both profiles</Fragment>
+        ) : profile.customerprofile ? (
+          <Fragment>
+            You have a customer profile. Are you qualified to sign up for a
+            professional profile?
+            <br></br>
+            <Link to="/create-pro-profile" className="btn btn-primary my-1">
+              Create Professional Profile
+            </Link>
+          </Fragment>
+        ) : profile.professionalprofile ? (
+          <Fragment>
+            You have a professional profile
+            <br></br>
+            <Link to="/create-cust-profile" className="btn btn-primary my-1">
+              Create Customer Profile
+            </Link>
+          </Fragment>
+        ) : (
+          <Fragment>You don't have any profiles</Fragment>
+        )
+      }
     </Fragment>
   );
 };

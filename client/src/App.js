@@ -10,6 +10,8 @@ import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
 import Usercontrol from './components/layout/Usercontrol';
 import Dashboard from './components/dashboard/Dashboard';
+import CreateProProfile from './components/profile-form/CreateProProfile';
+import CreateCustProfile from './components/profile-form/CreateCustProfile';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -50,6 +52,16 @@ const App = () => {
               <Route exact path="/cust-register" component={Custregister} />
               <Route exact path="/cust-profile" component={Custprofile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute
+                exact
+                path="/create-pro-profile"
+                component={CreateProProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/create-cust-profile"
+                component={CreateCustProfile}
+              />
               <PrivateRoute
                 exact
                 path="/user-control"
