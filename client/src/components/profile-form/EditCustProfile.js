@@ -1,16 +1,18 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProProfile } from '../../actions/profile';
+import { createCustProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProProfile = ({ createProProfile, history }) => {
+const EditCustProfile = ({
+  profile: { profile, loading },
+  createCustProfile,
+  getCurrentProfile,
+  history,
+}) => {
   const [formData, setFormData] = useState({
-    company: '',
-    website: '',
+    need: '',
     location: '',
-    status: '',
-    skills: '',
     bio: '',
     youtube: '',
     twitter: '',
@@ -21,12 +23,47 @@ const CreateProProfile = ({ createProProfile, history }) => {
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      location:
+        loading || !profile.customerprofile.location
+          ? ''
+          : profile.customerprofile.location,
+      need:
+        loading || !profile.customerprofile.need
+          ? ''
+          : profile.customerprofile.need,
+      bio:
+        loading || !profile.customerprofile.bio
+          ? ''
+          : profile.customerprofile.bio,
+      twitter:
+        loading || !profile.social
+          ? ''
+          : profile.customerprofile.social.twitter,
+      facebook:
+        loading || !profile.social
+          ? ''
+          : profile.customerprofile.social.facebook,
+      linkedin:
+        loading || !profile.social
+          ? ''
+          : profile.customerprofile.social.linkedin,
+      youtube:
+        loading || !profile.social
+          ? ''
+          : profile.customerprofile.social.youtube,
+      instagram:
+        loading || !profile.social
+          ? ''
+          : profile.customerprofile.social.instagram,
+    });
+  }, [loading]);
+
   const {
-    company,
-    website,
+    need,
     location,
-    status,
-    skills,
     bio,
     youtube,
     twitter,
@@ -40,21 +77,21 @@ const CreateProProfile = ({ createProProfile, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProProfile(formData, history);
+    createCustProfile(formData, history, true);
   };
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Create Your Profile</h1>
+      <h1 className="large text-primary">Create Your Customer Profile</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Let's get some information to make your
-        professional profile stand out
+        <i className="fas fa-user"></i> Please tell us a few things about
+        yourself and what are of help you need
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
-          <select name="status" value={status} onChange={(e) => onChange(e)}>
-            <option value="0">* Select Professional Status</option>
+          <select name="need" value={need} onChange={(e) => onChange(e)}>
+            <option value="0">* Select Professional Needs</option>
             <option value="Registered Nurse">Registered Nurse</option>
             <option value="Professional Social Worker">
               Professional Social Worker
@@ -68,30 +105,6 @@ const CreateProProfile = ({ createProProfile, history }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Company"
-            name="company"
-            value={company}
-            onChange={(e) => onChange(e)}
-          />
-          <small className="form-text">
-            Could be your own company or one you work for
-          </small>
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Website"
-            name="website"
-            value={website}
-            onChange={(e) => onChange(e)}
-          />
-          <small className="form-text">
-            Could be your own or a company website
-          </small>
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
             placeholder="Location"
             name="location"
             value={location}
@@ -99,18 +112,6 @@ const CreateProProfile = ({ createProProfile, history }) => {
           />
           <small className="form-text">
             City & state suggested (eg. Boston, MA)
-          </small>
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Skills"
-            name="skills"
-            value={skills}
-            onChange={(e) => onChange(e)}
-          />
-          <small className="form-text">
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
           </small>
         </div>
         <div className="form-group">
@@ -195,17 +196,24 @@ const CreateProProfile = ({ createProProfile, history }) => {
 
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
-          Go back
+          Go Back
         </Link>
       </form>
     </Fragment>
   );
 };
 
-CreateProProfile.propTypes = {
-  createProProfile: PropTypes.func.isRequired,
+EditCustProfile.propTypes = {
+  createCustProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProProfile })(
-  withRouter(CreateProProfile)
-);
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, {
+  createCustProfile,
+  getCurrentProfile,
+})(withRouter(EditCustProfile));

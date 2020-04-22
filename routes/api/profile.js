@@ -97,7 +97,6 @@ router.post(
       }
 
       //Create
-      console.log(profileFields);
       profile = new Proprofile(profileFields);
       await profile.save();
       res.json(profile);
@@ -119,12 +118,13 @@ router.post(
   auth,
 
   async (req, res) => {
-    const { location, bio, facebook } = req.body;
+    const { need, location, bio, facebook } = req.body;
 
     //Build profile object
     const profileFields = {};
     profileFields.user = req.user.id;
 
+    if (need) profileFields.need = need;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
     if (facebook) profileFields.facebook = facebook;

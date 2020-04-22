@@ -12,6 +12,8 @@ import Usercontrol from './components/layout/Usercontrol';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProProfile from './components/profile-form/CreateProProfile';
 import CreateCustProfile from './components/profile-form/CreateCustProfile';
+import EditProProfile from './components/profile-form/EditProProfile';
+import CustProProfile from './components/profile-form/EditCustProfile';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -66,6 +68,16 @@ const App = () => {
                 exact
                 path="/user-control"
                 component={Usercontrol}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-proprofile"
+                component={EditProProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-custprofile"
+                component={CustProProfile}
               />
               <Route exact path="/about" component={About} />
               <Route exact path="/articles" component={Articles} />

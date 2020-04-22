@@ -1,10 +1,15 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProProfile } from '../../actions/profile';
+import { createProProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProProfile = ({ createProProfile, history }) => {
+const EditProProfile = ({
+  profile: { profile, loading },
+  createProProfile,
+  getCurrentProfile,
+  history,
+}) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -20,6 +25,56 @@ const CreateProProfile = ({ createProProfile, history }) => {
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      company:
+        loading || !profile.professionalprofile.company
+          ? ''
+          : profile.professionalprofile.company,
+      website:
+        loading || !profile.professionalprofile.website
+          ? ''
+          : profile.professionalprofile.website,
+      location:
+        loading || !profile.professionalprofile.location
+          ? ''
+          : profile.professionalprofile.location,
+      status:
+        loading || !profile.professionalprofile.status
+          ? ''
+          : profile.professionalprofile.status,
+      skills:
+        loading || !profile.professionalprofile.skills
+          ? ''
+          : profile.professionalprofile.skills.join(','),
+      bio:
+        loading || !profile.professionalprofile.bio
+          ? ''
+          : profile.professionalprofile.bio,
+      twitter:
+        loading || !profile.social
+          ? ''
+          : profile.professionalprofile.social.twitter,
+      facebook:
+        loading || !profile.social
+          ? ''
+          : profile.professionalprofile.social.facebook,
+      linkedin:
+        loading || !profile.social
+          ? ''
+          : profile.professionalprofile.social.linkedin,
+      youtube:
+        loading || !profile.social
+          ? ''
+          : profile.professionalprofile.social.youtube,
+      instagram:
+        loading || !profile.social
+          ? ''
+          : profile.professionalprofile.social.instagram,
+    });
+  }, [loading]);
 
   const {
     company,
@@ -40,12 +95,12 @@ const CreateProProfile = ({ createProProfile, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProProfile(formData, history);
+    createProProfile(formData, history, true);
   };
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Create Your Profile</h1>
+      <h1 className="large text-primary">Edit Your Profile</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
         professional profile stand out
@@ -202,10 +257,17 @@ const CreateProProfile = ({ createProProfile, history }) => {
   );
 };
 
-CreateProProfile.propTypes = {
+EditProProfile.propTypes = {
   createProProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProProfile })(
-  withRouter(CreateProProfile)
-);
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, {
+  createProProfile,
+  getCurrentProfile,
+})(withRouter(EditProProfile));

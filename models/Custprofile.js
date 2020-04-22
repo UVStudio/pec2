@@ -3,17 +3,20 @@ const CustSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true
+    required: true,
+  },
+  need: {
+    type: String,
   },
   location: {
-    type: String
+    type: String,
   },
   bio: {
-    type: String
+    type: String,
   },
   facebook: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 module.exports = Cust = mongoose.model('custprofile', CustSchema);

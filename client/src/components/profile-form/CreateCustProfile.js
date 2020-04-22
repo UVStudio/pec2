@@ -32,18 +32,23 @@ const CreateCustProfile = ({ createCustProfile, history }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    createCustProfile(formData, history);
+  };
+
   return (
     <Fragment>
       <h1 className="large text-primary">Create Your Customer Profile</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Please tell us a few things about
-        yourself and what are of help you need
+        yourself and what area of help you need
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <select name="need" value={need} onChange={(e) => onChange(e)}>
-            <option value="0">* Select Professional Needs</option>
+            <option value="0">* Select Professional Need</option>
             <option value="Developer">Registered Nurse</option>
             <option value="Junior Developer">Professional Social Worker</option>
             <option value="Senior Developer">Doctor</option>
