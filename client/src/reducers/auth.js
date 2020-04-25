@@ -2,7 +2,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  USER_UPDATED,
   AUTH_ERROR,
+  USER_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
@@ -20,6 +22,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case USER_LOADED:
+    case USER_UPDATED:
       return {
         ...state,
         isAuthenticated: true,
@@ -38,6 +41,7 @@ export default function (state = initialState, action) {
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case AUTH_ERROR:
+    case USER_ERROR:
     case LOGOUT:
     case ACCOUNT_DELETED:
       localStorage.removeItem('token');

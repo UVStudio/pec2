@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
@@ -8,7 +9,7 @@ import Proprofile from './components/auth/Proprofile';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
-import Usercontrol from './components/layout/Usercontrol';
+import UserControl from './components/dashboard/UserControl';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProProfile from './components/profile-form/CreateProProfile';
 import CreateCustProfile from './components/profile-form/CreateCustProfile';
@@ -69,7 +70,7 @@ const App = () => {
               <PrivateRoute
                 exact
                 path="/user-control"
-                component={Usercontrol}
+                component={UserControl}
               />
               <PrivateRoute
                 exact
@@ -97,6 +98,7 @@ const App = () => {
             </Switch>
           </section>
         </Fragment>
+        <Footer />
       </Router>
     </Provider>
   );

@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const openCity = (e, tab) => {
-  // Declare all variables
+const openTab = (e, tab) => {
   let i, tabcontent, tablinks;
   // Get all elements with class="tabcontent" and hide them
   tabcontent = document.getElementsByClassName('tabcontent');
@@ -18,10 +17,6 @@ const openCity = (e, tab) => {
   document.getElementById(tab).style.display = 'block';
   e.currentTarget.className += ' active';
 };
-
-// const openCity = (e) => {
-//   console.log('clicking');
-// };
 
 const Proprofile = () => {
   return (
@@ -44,31 +39,28 @@ const Proprofile = () => {
           </div>
           <div className="profile-info-right">
             <div className="tab">
-              <button className="tablinks" onClick={(e) => openCity(e, 'Bio')}>
+              <button className="tablinks" onClick={(e) => openTab(e, 'Bio')}>
                 Bio
               </button>
               <button
                 className="tablinks"
-                onClick={(e) => openCity(e, 'Experience')}
+                onClick={(e) => openTab(e, 'Experience')}
               >
                 Experience
               </button>
               <button
                 className="tablinks"
-                onClick={(e) => openCity(e, 'Education')}
+                onClick={(e) => openTab(e, 'Education')}
               >
                 Education
               </button>
               <button
                 className="tablinks"
-                onClick={(e) => openCity(e, 'Skills')}
+                onClick={(e) => openTab(e, 'Skills')}
               >
                 Skills
               </button>
-              <button
-                className="tablinks"
-                onClick={(e) => openCity(e, 'Video')}
-              >
+              <button className="tablinks" onClick={(e) => openTab(e, 'Video')}>
                 Video
               </button>
             </div>

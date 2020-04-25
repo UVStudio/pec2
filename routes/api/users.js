@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
+const Proprofile = require('../../models/Proprofile');
+const Custprofile = require('../../models/Custprofile');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -15,14 +17,12 @@ const auth = require('../../middleware/auth');
 router.post(
   '/',
   [
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
+    check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check(
       'password',
       'Please enter a password with 6 or more characters.'
-    ).isLength({ min: 6 })
+    ).isLength({ min: 6 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -46,7 +46,7 @@ router.post(
       user = new User({
         name,
         email,
-        password
+        password,
       });
       //hash password before saving to mongoDB
       const salt = await bcrypt.genSalt(10);
@@ -58,8 +58,8 @@ router.post(
       //payload = { user: { id: '5efasfgq454qtrgafs' } } - the user id in mongoDB. the _ in front of id is not needed by mongoose
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
       //jwt.sign requires user.id(payload), jwtSecret from config-default.json, expiresIn(optional), callback to provide token
       jwt.sign(
@@ -105,15 +105,13 @@ router.put(
   [
     auth,
     [
-      (check('name', 'Name is required')
-        .not()
-        .isEmpty(),
+      (check('name', 'Name is required').not().isEmpty(),
       check('email', 'Please include a valid email').isEmail(),
       check(
         'password',
         'Please enter a password with 6 or more characters.'
-      ).isLength({ min: 6 }))
-    ]
+      ).isLength({ min: 6 })),
+    ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -135,8 +133,8 @@ router.put(
         {
           $set: {
             _id: req.user.id,
-            ...info
-          }
+            ...info,
+          },
         },
         { new: true }
       );
@@ -157,6 +155,8 @@ router.put(
 
 router.delete('/', auth, async (req, res) => {
   try {
+    await Proprofile.findByIdAndRemove({ _id: req.user.id });
+    await Custprofile.findByIdAndRemove({ _id: req.user.id });
     await User.findByIdAndRemove({ _id: req.user.id });
     res.json({ msg: 'User deleted.' });
   } catch (err) {

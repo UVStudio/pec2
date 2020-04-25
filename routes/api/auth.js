@@ -13,7 +13,7 @@ const { check, validationResult } = require('express-validator');
 router.get('/', auth, async (req, res) => {
   try {
     //req.user.id comes from middleware/auth.js
-    const user = await await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -30,7 +30,7 @@ router.post(
   '/',
   [
     check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+    check('password', 'Password is required').exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -64,8 +64,8 @@ router.post(
       // payload = { user: { id: '5efasfgq454qtrgafs' } } - the user id in mongoDB. the _ in front of id is not needed by mongoose
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
       //jwt.sign requires user.id(payload), jwtSecret from config-default.json, expiresIn(optional), callback to provide token
       jwt.sign(

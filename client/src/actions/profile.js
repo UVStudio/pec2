@@ -185,10 +185,10 @@ export const deleteEducation = (id) => async (dispatch) => {
 };
 
 //Delete User along with profile(s)
-export const deleteAccount = (id) => async (dispatch) => {
+export const deleteAccount = () => async (dispatch) => {
   if (window.confirm('Are you sure? This cannot be undone.')) {
     try {
-      await axios.delete(`/api/profile}`);
+      await axios.delete(`/api/users`);
       dispatch({ type: CLEAR_PROFILE });
       dispatch({ type: ACCOUNT_DELETED });
       dispatch(setAlert('Your account has been deleted'));

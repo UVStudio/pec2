@@ -418,7 +418,7 @@ router.delete('/proprofile/education/:edu_id', auth, async (req, res) => {
       .indexOf(req.params.edu_id);
     profile.education.splice(removeIndex, 1);
     await profile.save();
-    res.json(profile);
+    res.json({ professionalprofile: profile, customerprofile: profile });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
