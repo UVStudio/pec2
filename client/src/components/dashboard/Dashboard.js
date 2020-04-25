@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getCurrentProfile } from '../../actions/profile';
 import ProDashboardActions from '../dashboard/ProDashboardActions';
+import Experience from '../dashboard/Experience';
+import Education from '../dashboard/Education';
 import CustDashboardActions from './CustDashboardAction';
 
 const Dashboard = ({
@@ -40,6 +42,9 @@ const Dashboard = ({
           <br></br>
           You have a customer profile.
           <CustDashboardActions />
+          <br></br>
+          <Experience experience={profile.professionalprofile.experience} />
+          <Education education={profile.professionalprofile.education} />
         </Fragment>
       ) : profile.customerprofile ? (
         <Fragment>
@@ -49,6 +54,7 @@ const Dashboard = ({
           <Link to="/create-pro-profile" className="btn btn-primary my-1">
             Create Professional Profile
           </Link>
+          <Education education={profile.professionalprofile.education} />
         </Fragment>
       ) : profile.professionalprofile ? (
         <Fragment>
@@ -58,6 +64,8 @@ const Dashboard = ({
           <Link to="/create-cust-profile" className="btn btn-primary my-1">
             Create Customer Profile
           </Link>
+          <br></br>
+          <Experience experience={profile.professionalprofile.experience} />
         </Fragment>
       ) : (
         <Fragment>You don't have any profiles</Fragment>

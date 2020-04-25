@@ -14,6 +14,8 @@ import CreateProProfile from './components/profile-form/CreateProProfile';
 import CreateCustProfile from './components/profile-form/CreateCustProfile';
 import EditProProfile from './components/profile-form/EditProProfile';
 import CustProProfile from './components/profile-form/EditCustProfile';
+import AddExperience from './components/profile-form/AddExperience';
+import AddEducation from './components/profile-form/AddEducation';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -78,6 +80,16 @@ const App = () => {
                 exact
                 path="/edit-custprofile"
                 component={CustProProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/add-experience"
+                component={AddExperience}
+              />
+              <PrivateRoute
+                exact
+                path="/add-education"
+                component={AddEducation}
               />
               <Route exact path="/about" component={About} />
               <Route exact path="/articles" component={Articles} />
