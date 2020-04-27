@@ -1,54 +1,29 @@
-import React, { Fragment, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Avatar = () => {
-  const [avatar, setAvatar] = useState('');
-  const [avatarName, setAvatarName] = useState('no file selected');
-  const [uploadedFile, setUploadedFile] = useState({});
+const Avatar = ({ auth: { loading, user } }) => {
+  let avatarId;
 
-  const onChange = async (e) => {
-    setAvatar(e.target.files[0]);
-    setAvatarName(e.target.files[0].name);
-  };
+  if (!loading) {
+    avatarId = user.avatarId;
+  }
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', avatar);
-
-    try {
-      const res = await axios.post('api/avatar/upload', formData);
-      const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
-      console.log('good');
-    } catch (err) {
-      if (err.response.status === 500) {
-        console.log('There was a problem with the server.');
-      } else {
-        console.log(err.response);
-      }
-    }
-  };
+  const avatarPath = `api/avatar/image/${avatarId}`;
 
   return (
-    <Fragment>
-      <form onSubmit={onSubmit}>
-        <div className="avatar-upload">
-          <input
-            type="file"
-            name="file"
-            className="avatar-upload-label"
-            id="customAvatar"
-            onChange={onChange}
-          />
-          <label className="avatar-upload-label" htmlFor="customAvatar">
-            {avatarName}
-          </label>
-          <input type="submit" value="Upload" />
-        </div>
-      </form>
-    </Fragment>
+    <div className="profile-info-left">
+      <img className="round-img my-1" src={avatarId ? avatarPath : ''} alt="" />
+    </div>
   );
 };
 
-export default Avatar;
+Avatar.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Avatar);

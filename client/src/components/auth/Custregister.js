@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { auth } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import Avatar from '../layout/Avatar';
+import AvatarUpload from '../layout/AvatarUpload';
 
 const Custregister = ({ setAlert, auth, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -44,7 +44,7 @@ const Custregister = ({ setAlert, auth, isAuthenticated }) => {
       <p className="lead">
         <i className="fas fa-user"></i>Register Your User Info Please
       </p>
-      <Avatar />
+      <AvatarUpload />
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input

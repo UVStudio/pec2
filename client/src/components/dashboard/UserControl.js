@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AvatarUpload from '../layout/AvatarUpload';
 import Avatar from '../layout/Avatar';
 import { connect } from 'react-redux';
 import { userUpdate, getUser } from '../../actions/auth';
@@ -16,7 +17,6 @@ const UserControl = ({
     email: '',
     password: '',
     password2: '',
-    avatarId: '',
   });
 
   useEffect(() => {
@@ -26,13 +26,10 @@ const UserControl = ({
       email: loading || !user.email ? '' : user.email,
       password: loading || !user.password ? '' : user.password,
       password2: loading || !user.password2 ? '' : user.password2,
-      avatarId: loading || !user.avatarId ? '' : user.avatarId,
     });
   }, [loading]);
 
   const { name, email, password, password2 } = formData;
-  console.log(user);
-  const avatarPath = `api/avatar/image/${'5ea61b5ac9b291073114292e'}`;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,12 +45,10 @@ const UserControl = ({
       <p className="lead">
         <i className="fas fa-user"></i> Please update your user information here
       </p>
-      <Avatar />
+      <AvatarUpload />
       <div className="profile-grid my-1">
         <div className="profile-top p-2">
-          <div className="profile-info-left">
-            <img className="round-img my-1" src={avatarPath} alt="" />
-          </div>
+          <Avatar />
           <div className="profile-info-right">
             <form className="form" onSubmit={(e) => onSubmit(e)}>
               <div className="form-group">

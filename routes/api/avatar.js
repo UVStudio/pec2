@@ -148,8 +148,6 @@ router.get('/files', (req, res) => {
 // @desc   Display image by avatarId
 
 router.get('/image/:id', (req, res) => {
-  //console.log('hello');
-  //console.log(req.params.id);
   gfs.files.findOne({ _id: ObjectID(req.params.id) }, (err, file) => {
     // Check if files exist
     if (!file || file.length === 0) {
