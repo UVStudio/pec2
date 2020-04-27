@@ -30,10 +30,9 @@ const UserControl = ({
     });
   }, [loading]);
 
-  const { name, email, password, password2, avatarId } = formData;
-  const tempImgName = `api/avatar/image/${'391f249ececbc638054a3a764a851723.jpg'}`;
-
+  const { name, email, password, password2 } = formData;
   console.log(user);
+  const avatarPath = `api/avatar/image/${'5ea61b5ac9b291073114292e'}`;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,7 +52,7 @@ const UserControl = ({
       <div className="profile-grid my-1">
         <div className="profile-top p-2">
           <div className="profile-info-left">
-            <img className="round-img my-1" src={tempImgName} alt="" />
+            <img className="round-img my-1" src={avatarPath} alt="" />
           </div>
           <div className="profile-info-right">
             <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -120,6 +119,7 @@ UserControl.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { userUpdate, getUser })(

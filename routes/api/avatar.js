@@ -8,6 +8,7 @@ const User = require('../../models/User');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+const ObjectID = require('mongodb').ObjectID;
 
 //mongo URI
 const config = require('config');
@@ -121,46 +122,44 @@ router.get('/files', (req, res) => {
 // @routes GET /image/:filename
 // @desc   Display image by file name
 
-router.get('/image/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if files exist
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists',
-      });
-    }
-    if (
-      file.contentType === 'image/jpeg' ||
-      file.contentType === 'image/jpg' ||
-      file.contentType === 'image/png'
-    ) {
-      //Read output to browser
-      const readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({ err: 'Not an image' });
-    }
-  });
-});
+// router.get('/image/:filename', (req, res) => {
+//   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+//     // Check if files exist
+//     if (!file || file.length === 0) {
+//       return res.status(404).json({
+//         err: 'No file exists',
+//       });
+//     }
+//     if (
+//       file.contentType === 'image/jpeg' ||
+//       file.contentType === 'image/jpg' ||
+//       file.contentType === 'image/png'
+//     ) {
+//       //Read output to browser
+//       const readstream = gfs.createReadStream(file.filename);
+//       readstream.pipe(res);
+//     } else {
+//       res.status(404).json({ err: 'Not an image' });
+//     }
+//   });
+// });
 
 // @routes GET /files/:avatarId
 // @desc   Display image by avatarId
 
-router.get('/files/:id', (req, res) => {
+router.get('/image/:id', (req, res) => {
   //console.log('hello');
-  console.log(req.params.id);
-  gfs.files.findOne({ _id: req.params.id }, (err, file) => {
+  //console.log(req.params.id);
+  gfs.files.findOne({ _id: ObjectID(req.params.id) }, (err, file) => {
     // Check if files exist
     if (!file || file.length === 0) {
       return res.status(404).json({
         err: 'No file exists',
       });
     }
-    return res.json(file);
-
     //Read output to browser
-    // const readstream = gfs.createReadStream(file.filename);
-    //readstream.pipe(res);
+    const readstream = gfs.createReadStream(file.filename);
+    readstream.pipe(res);
   });
 });
 
