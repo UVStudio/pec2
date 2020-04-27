@@ -31,6 +31,9 @@ const UserControl = ({
   }, [loading]);
 
   const { name, email, password, password2, avatarId } = formData;
+  const tempImgName = `api/avatar/image/${'391f249ececbc638054a3a764a851723.jpg'}`;
+
+  console.log(user);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,11 +53,7 @@ const UserControl = ({
       <div className="profile-grid my-1">
         <div className="profile-top p-2">
           <div className="profile-info-left">
-            <img
-              className="round-img my-1"
-              src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-              alt=""
-            />
+            <img className="round-img my-1" src={tempImgName} alt="" />
           </div>
           <div className="profile-info-right">
             <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -102,6 +101,9 @@ const UserControl = ({
                 value="Update"
               />
             </form>
+            <Link className="btn btn-light my-1" to="/dashboard">
+              Go Back
+            </Link>
           </div>
         </div>
       </div>

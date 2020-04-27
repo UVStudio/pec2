@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   },
   avatarId: {
     type: mongoose.Schema.Types.ObjectId,
-    //ref: 'uploads.files'
+    ref: 'uploads.files',
   },
   date: {
     type: Date,

@@ -6,12 +6,12 @@ const Avatar = () => {
   const [avatarName, setAvatarName] = useState('no file selected');
   const [uploadedFile, setUploadedFile] = useState({});
 
-  const onChange = async e => {
+  const onChange = async (e) => {
     setAvatar(e.target.files[0]);
     setAvatarName(e.target.files[0].name);
   };
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', avatar);

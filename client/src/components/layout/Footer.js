@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const Footer = () => {
   return (
@@ -6,13 +6,7 @@ const Footer = () => {
       <div className="form">
         <form>
           <label>Sign up for our newsletter:</label>
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            type="text"
-            name="email"
-          />
+          <input type="email" placeholder="Email Address" name="email" />
         </form>
       </div>
       <div>

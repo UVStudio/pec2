@@ -8,7 +8,6 @@ import ProDashboardActions from '../dashboard/ProDashboardActions';
 import Experience from '../dashboard/Experience';
 import Education from '../dashboard/Education';
 import CustDashboardActions from './CustDashboardAction';
-import UserControl from './UserControl';
 
 const Dashboard = ({
   getCurrentProfile,
