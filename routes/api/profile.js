@@ -159,7 +159,10 @@ router.post(
 
 router.get('/proprofiles', async (req, res) => {
   try {
-    const profiles = await Proprofile.find().populate('user', ['name']);
+    const profiles = await Proprofile.find().populate('user', [
+      'name',
+      'avatarId',
+    ]);
     res.json(profiles);
   } catch (err) {
     console.error(err.message);

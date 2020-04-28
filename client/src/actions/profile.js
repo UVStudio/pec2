@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   GET_PROFILE,
+  GET_PROFILES,
   PROFILE_ERROR,
   UPDATE_PROFILE,
   CLEAR_PROFILE,
@@ -8,11 +9,61 @@ import {
 } from './types';
 import { setAlert } from './alert';
 
-//GET current users profiles
-
+//GET current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('api/profile/me');
+    const res = await axios.get('/api/profile/me');
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//GET all profiles
+export const getProProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile/proprofiles');
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//GET professional profile by ID
+export const getProProfileById = (userId) => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get(`/api/profile/proprofile/user/${userId}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//GET customer profile by ID
+export const getCustProfileById = (userId) => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get(`/api/profile/custprofile/user/${userId}`);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,

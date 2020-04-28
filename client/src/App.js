@@ -17,6 +17,7 @@ import EditProProfile from './components/profile-form/EditProProfile';
 import CustProProfile from './components/profile-form/EditCustProfile';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
+import ProProfiles from './components/profiles/ProProfiles';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -53,6 +54,7 @@ const App = () => {
               <Route exact path="/pro-login" component={Prologin} />
               <Route exact path="/pro-register" component={Proregister} />
               <Route exact path="/pro-profile" component={Proprofile} />
+              <Route exact path="/pro-profiles" component={ProProfiles} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
               <Route exact path="/cust-profile" component={Custprofile} />
