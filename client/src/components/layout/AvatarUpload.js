@@ -20,7 +20,6 @@ const Avatar = () => {
       const res = await axios.post('api/avatar/upload', formData);
       const { fileName, filePath } = res.data;
       setUploadedFile({ fileName, filePath });
-      console.log('good');
     } catch (err) {
       if (err.response.status === 500) {
         console.log('There was a problem with the server.');

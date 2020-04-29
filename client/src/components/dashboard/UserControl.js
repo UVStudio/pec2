@@ -27,7 +27,7 @@ const UserControl = ({
       password: loading || !user.password ? '' : user.password,
       password2: loading || !user.password2 ? '' : user.password2,
     });
-  }, [loading]);
+  }, [loading, getUser, user.name, user.email, user.password, user.password2]);
 
   const { name, email, password, password2 } = formData;
 

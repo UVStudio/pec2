@@ -74,7 +74,22 @@ const EditProProfile = ({
           ? ''
           : profile.professionalprofile.social.instagram,
     });
-  }, [loading]);
+  }, [
+    loading,
+    getCurrentProfile,
+    profile.professionalprofile.company,
+    profile.professionalprofile.website,
+    profile.professionalprofile.location,
+    profile.professionalprofile.status,
+    profile.professionalprofile.skills,
+    profile.professionalprofile.bio,
+    profile.professionalprofile.social.twitter,
+    profile.professionalprofile.social.facebook,
+    profile.professionalprofile.social.linkedin,
+    profile.professionalprofile.social.youtube,
+    profile.professionalprofile.social.instagram,
+    profile.social,
+  ]);
 
   const {
     company,

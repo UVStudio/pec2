@@ -420,6 +420,8 @@ button {
 
 .profile-top img {
   width: 250px;
+  height: 250px;
+  object-fit: cover;
 }
 
 .profile-top .icons a {
@@ -652,7 +654,9 @@ button {
   /* Profile Page */
   .profile-top img,
   .profile img {
-    width: 200px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
     margin: auto;
   }
 
@@ -782,6 +786,8 @@ button {
   .profile-top img,
   .profile img {
     width: 200px;
+    height: 200px;
+    object-fit: cover;
     margin: auto;
   }
 
@@ -882,6 +888,8 @@ button {
   .profile-top img,
   .profile img {
     width: 200px;
+    height: 200px;
+    object-fit: cover;
     margin: auto;
   }
 
