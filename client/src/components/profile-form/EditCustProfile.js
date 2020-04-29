@@ -59,19 +59,7 @@ const EditCustProfile = ({
           ? ''
           : profile.customerprofile.social.instagram,
     });
-  }, [
-    loading,
-    getCurrentProfile,
-    profile.customerprofile.bio,
-    profile.customerprofile.location,
-    profile.customerprofile.need,
-    profile.customerprofile.social.twitter,
-    profile.customerprofile.social.facebook,
-    profile.customerprofile.social.linkedin,
-    profile.customerprofile.social.youtube,
-    profile.customerprofile.social.instagram,
-    profile.social,
-  ]);
+  }, [loading]);
 
   const {
     need,

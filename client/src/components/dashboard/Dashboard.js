@@ -19,7 +19,7 @@ const Dashboard = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
+  return profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -30,7 +30,8 @@ const Dashboard = ({
         Update User infomation
       </Link>
       <br></br>
-      {profile == null ? (
+      {profile.professionalprofile == null &&
+      profile.customerprofile == null ? (
         <Fragment>
           You don't have any profiles
           <br></br>

@@ -14,10 +14,9 @@ router.get('/me', auth, async (req, res) => {
     const proprofile = await Proprofile.findOne({ user: req.user.id });
     const custprofile = await Custprofile.findOne({ user: req.user.id });
     if (!proprofile && !custprofile) {
-      return res
-        .status(400)
-        .json({ msg: 'This user does not have a profile set up.' });
+      return res.json({ professionalprofile: null, customerprofile: null });
     }
+
     //Fix later. Omit getting a profile if user does not have one
     res.json({
       professionalprofile: proprofile,

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Avatar = () => {
   const [avatar, setAvatar] = useState('');
-  const [avatarName, setAvatarName] = useState('no file selected');
+  const [avatarName, setAvatarName] = useState('Select file');
   const [uploadedFile, setUploadedFile] = useState({});
 
   const onChange = async (e) => {
@@ -36,14 +36,23 @@ const Avatar = () => {
           <input
             type="file"
             name="file"
-            className="avatar-upload-label"
-            id="customAvatar"
+            id="custom-avatar"
+            className="hidden short"
             onChange={onChange}
           />
-          <label className="avatar-upload-label" htmlFor="customAvatar">
+          <label
+            className="avatar-upload-label btn btn-primary"
+            htmlFor="custom-avatar"
+          >
             {avatarName}
           </label>
-          <input type="submit" value="Upload" />
+          <input id="avatar-upload" type="submit" value="" className="hidden" />
+          <label
+            className="avatar-upload-label btn btn-primary"
+            htmlFor="avatar-upload"
+          >
+            Upload
+          </label>
         </div>
       </form>
     </Fragment>

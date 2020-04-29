@@ -261,6 +261,13 @@ ul {
   border: 1px solid #ccc;
 }
 
+input[type='file'] {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 500;
+}
+
 .form input[type='submit'],
 button {
   font: inherit;
@@ -606,6 +613,19 @@ button {
 
 .figure {
   width: 400px;
+}
+
+/* utils */
+.hidden {
+  visibility: hidden;
+}
+
+.custom-label {
+  cursor: pointer;
+}
+
+.short {
+  width: 1px;
 }
 
 /* Mobile Styles */
