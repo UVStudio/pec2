@@ -6,6 +6,7 @@ import {
   AVATAR_ERROR,
 } from './types';
 import { setAlert } from './alert';
+import { loadUser } from './auth';
 
 //POST user avatar
 export const avatarUpload = (formData) => async (dispatch) => {
@@ -16,6 +17,9 @@ export const avatarUpload = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(setAlert('Avatar Uploaded', 'success'));
+    setTimeout(() => {
+      dispatch(loadUser());
+    }, 7000);
   } catch (err) {
     dispatch({
       type: AVATAR_UPLOAD_ERROR,

@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAvatar } from '../../actions/avatar';
 
 const Avatar = ({ auth: { loading, user } }) => {
-  // useEffect(() => {
-  //   getAvatar(avatarId);
-  // }, []);
-
   let avatarId;
 
   if (!loading) {

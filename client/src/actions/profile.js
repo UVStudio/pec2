@@ -155,7 +155,6 @@ export const addExperience = (formData, history) => async (dispatch) => {
       type: UPDATE_PROFILE,
       payload: res.data,
     });
-    console.log(res.data);
     dispatch(setAlert('Experience added', 'success'));
     history.push('/dashboard');
   } catch (err) {

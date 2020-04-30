@@ -8,6 +8,7 @@ import ProDashboardActions from '../dashboard/ProDashboardActions';
 import Experience from '../dashboard/Experience';
 import Education from '../dashboard/Education';
 import CustDashboardActions from './CustDashboardAction';
+import Avatar from '../layout/Avatar';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -25,6 +26,10 @@ const Dashboard = ({
     <Fragment>
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">Welcome {user && user.name}</p>
+      <div className="profile-top p-2">
+        <Avatar />
+      </div>
+
       <p>You can update your user information here:</p>
       <Link to="/user-control" className="btn btn-primary my-1">
         Update User infomation
