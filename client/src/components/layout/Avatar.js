@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getAvatar } from '../../actions/avatar';
 
 const Avatar = ({ auth: { loading, user } }) => {
+  // useEffect(() => {
+  //   getAvatar(avatarId);
+  // }, []);
+
   let avatarId;
 
   if (!loading) {
@@ -20,10 +25,11 @@ const Avatar = ({ auth: { loading, user } }) => {
 
 Avatar.propTypes = {
   auth: PropTypes.object.isRequired,
+  getAvatar: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Avatar);
+export default connect(mapStateToProps, { getAvatar })(Avatar);

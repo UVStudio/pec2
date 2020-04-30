@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { avatarUpload } from '../../actions/avatar';
 
-const Avatar = () => {
+const AvatarUpload = ({ avatarUpload }) => {
   const [avatar, setAvatar] = useState('');
   const [avatarName, setAvatarName] = useState('Select file');
-  const [uploadedFile, setUploadedFile] = useState({});
+  //const [uploadedFile, setUploadedFile] = useState({});
 
   const onChange = async (e) => {
     setAvatar(e.target.files[0]);
@@ -17,9 +20,10 @@ const Avatar = () => {
     formData.append('file', avatar);
 
     try {
-      const res = await axios.post('api/avatar/upload', formData);
-      const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
+      avatarUpload(formData);
+      //await axios.post('/api/avatar/upload', formData);
+      // const { fileName, filePath } = res.data;
+      // setUploadedFile({ fileName, filePath });
     } catch (err) {
       if (err.response.status === 500) {
         console.log('There was a problem with the server.');
@@ -59,4 +63,8 @@ const Avatar = () => {
   );
 };
 
-export default Avatar;
+AvatarUpload.propTypes = {
+  avatarUpload: PropTypes.func.isRequired,
+};
+
+export default connect(null, { avatarUpload })(AvatarUpload);
