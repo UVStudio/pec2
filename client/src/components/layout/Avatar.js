@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Spinner from './Spinner';
 import { connect } from 'react-redux';
 import { getAvatar } from '../../actions/avatar';
 
@@ -12,10 +13,27 @@ const Avatar = ({ auth: { loading, user } }) => {
 
   const avatarPath = `api/avatar/image/${avatarId}`;
 
+  // return (
+  //   <div className="profile-info-left">
+  //     <img className="round-img my-1" src={avatarId ? avatarPath : ''} alt="" />
+  //   </div>
+  // );
   return (
-    <div className="profile-info-left">
-      <img className="round-img my-1" src={avatarId ? avatarPath : ''} alt="" />
-    </div>
+    <Fragment>
+      {user == null || loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <div className="profile-info-left">
+            <img
+              className="round-img my-1"
+              src={avatarId ? avatarPath : ''}
+              alt=""
+            />
+          </div>
+        </Fragment>
+      )}
+    </Fragment>
   );
 };
 

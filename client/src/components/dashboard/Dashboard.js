@@ -20,7 +20,7 @@ const Dashboard = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return profile === null ? (
+  return profile == null || loading ? (
     <Spinner />
   ) : (
     <Fragment>

@@ -17,6 +17,7 @@ const EditProProfile = ({
     status: '',
     skills: '',
     bio: '',
+    intro: '',
     youtube: '',
     twitter: '',
     facebook: '',
@@ -53,24 +54,28 @@ const EditProProfile = ({
         loading || !profile.professionalprofile.bio
           ? ''
           : profile.professionalprofile.bio,
+      intro:
+        loading || !profile.professionalprofile.intro
+          ? ''
+          : profile.professionalprofile.intro,
       twitter:
-        loading || !profile.social
+        loading || !profile.professionalprofile.social.twitter
           ? ''
           : profile.professionalprofile.social.twitter,
       facebook:
-        loading || !profile.social
+        loading || !profile.professionalprofile.social.facebook
           ? ''
           : profile.professionalprofile.social.facebook,
       linkedin:
-        loading || !profile.social
+        loading || !profile.professionalprofile.social.linkedin
           ? ''
           : profile.professionalprofile.social.linkedin,
       youtube:
-        loading || !profile.social
+        loading || !profile.professionalprofile.social.youtube
           ? ''
           : profile.professionalprofile.social.youtube,
       instagram:
-        loading || !profile.social
+        loading || !profile.professionalprofile.social.instagram
           ? ''
           : profile.professionalprofile.social.instagram,
     });
@@ -83,6 +88,7 @@ const EditProProfile = ({
     status,
     skills,
     bio,
+    intro,
     youtube,
     twitter,
     facebook,
@@ -141,7 +147,7 @@ const EditProProfile = ({
             onChange={(e) => onChange(e)}
           />
           <small className="form-text">
-            Could be your own or a company website
+            Could be your own or a company website (eg. www.company.com)
           </small>
         </div>
         <div className="form-group">
@@ -176,6 +182,16 @@ const EditProProfile = ({
             onChange={(e) => onChange(e)}
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Introduction Video"
+            name="intro"
+            value={intro}
+            onChange={(e) => onChange(e)}
+          />
+          <small className="form-text">Post the YouTube embed code</small>
         </div>
 
         <div className="my-2">

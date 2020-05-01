@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 const openTab = (e, tab) => {
@@ -21,10 +21,13 @@ const openTab = (e, tab) => {
 const ProfileTop = ({
   profile: {
     status,
+    bio,
+    intro,
     company,
     location,
     website,
     social,
+    skills,
     user: { _id, name, avatarId },
   },
 }) => {
@@ -36,7 +39,63 @@ const ProfileTop = ({
           <img src={avatarPath} alt="" className="round-img" />
           <h1 className="large">{name}</h1>
           <p className="lead">{status}</p>
-          <p>{location}</p>
+          <p>{location && <span>{location}</span>}</p>
+          <div className="icons my-1">
+            {website && (
+              <a
+                href={'http://' + website}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fas fa-globe fa-2x" />
+              </a>
+            )}
+            {social && social.twitter && (
+              <a
+                href={'http://' + social.twitter}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fab fa-twitter fa-2x" />
+              </a>
+            )}
+            {social && social.facebook && (
+              <a
+                href={'http://' + social.facebook}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fab fa-facebook fa-2x" />
+              </a>
+            )}
+            {social && social.linkedin && (
+              <a
+                href={'http://' + social.linkedin}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fab fa-linkedin fa-2x" />
+              </a>
+            )}
+            {social && social.youtube && (
+              <a
+                href={'http://' + social.youtube}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fab fa-youtube fa-2x" />
+              </a>
+            )}
+            {social && social.instagram && (
+              <a
+                href={'http://' + social.instagram}
+                target="_blank"
+                rel="noopener nonreferrer"
+              >
+                <i className="fab fa-instagram fa-2x" />
+              </a>
+            )}
+          </div>
         </div>
         <div className="profile-info-right">
           <div className="tab">
@@ -64,21 +123,15 @@ const ProfileTop = ({
           </div>
 
           <div id="Bio" className="tabcontent">
-            <p>
-              Quisque et leo ut ex viverra imperdiet. Vestibulum ante ipsum
-              primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-              Suspendisse faucibus molestie blandit. Aenean ut aliquet turpis.
-              Curabitur ut tellus at quam fermentum iaculis nec nec nulla. Fusce
-              at pretium mauris. Duis et rutrum diam.
-            </p>
+            {bio ? <p>{bio}</p> : 'This person has not written a bio'}
           </div>
-
           <div id="Experience" className="tabcontent">
             <div className="experience-item">
-              <h3 className="text-white pb">Microsoft</h3>
+              <h3 className="text-white pb">{company}</h3>
               <p>Oct 2011 - Current</p>
               <p className="pb">
-                <strong>Position: </strong>Senior Developer
+                <strong>Position: </strong>
+                {status}
               </p>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -122,21 +175,12 @@ const ProfileTop = ({
           </div>
           <div id="Skills" className="tabcontent">
             <div className="skills">
-              <div className="p">
-                <i className="fa fa-check"></i> HTML
-              </div>
-              <div className="p">
-                <i className="fa fa-check"></i> CSS
-              </div>
-              <div className="p">
-                <i className="fa fa-check"></i> JavaScript
-              </div>
-              <div className="p">
-                <i className="fa fa-check"></i> Python
-              </div>
-              <div className="p">
-                <i className="fa fa-check"></i> C#
-              </div>
+              {skills.map((skill, index) => (
+                <div key={index} className="p-1">
+                  <i className="fas fa-check"></i>
+                  {skill}
+                </div>
+              ))}
             </div>
           </div>
           <div id="Video" className="tabcontent video-content">
@@ -145,7 +189,7 @@ const ProfileTop = ({
                 title="YouTube video"
                 width="480"
                 height="270"
-                src="https://www.youtube.com/embed/VzcNPKTrC90"
+                src={intro}
               ></iframe>
             </p>
           </div>
@@ -154,6 +198,8 @@ const ProfileTop = ({
     </div>
   );
 };
+
+//https://www.youtube.com/embed/r6R2PZebALc
 
 ProfileTop.propTypes = {
   profile: PropTypes.object.isRequired,

@@ -52,6 +52,7 @@ router.post(
       website,
       location,
       bio,
+      intro,
       status,
       skills,
       youtube,
@@ -69,6 +70,7 @@ router.post(
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
+    if (intro) profileFields.intro = intro;
     if (status) profileFields.status = status;
     if (skills) {
       profileFields.skills = skills.split(',').map((skill) => skill.trim());

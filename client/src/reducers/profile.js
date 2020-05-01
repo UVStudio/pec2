@@ -3,6 +3,7 @@ import {
   GET_PROFILES,
   PROFILE_ERROR,
   CLEAR_PROFILE,
+  CLEAR_PROFILES,
   UPDATE_PROFILE,
 } from '../actions/types';
 
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profile: null,
+        loading: false,
+      };
+    case CLEAR_PROFILES:
+      return {
+        ...state,
+        profiles: [],
         loading: false,
       };
     default:

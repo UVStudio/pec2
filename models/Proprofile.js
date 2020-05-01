@@ -5,122 +5,125 @@ const ProprofileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true
+    required: true,
   },
   company: {
-    type: String
+    type: String,
   },
   website: {
-    type: String
+    type: String,
   },
   location: {
-    type: String
+    type: String,
   },
   status: {
     type: String,
-    require: true
+    require: true,
   },
   skills: {
     type: [String],
-    required: true
+    required: true,
   },
   bio: {
-    type: String
+    type: String,
+  },
+  intro: {
+    type: String,
   },
   experience: [
     {
       title: {
         type: String,
-        required: true
+        required: true,
       },
       company: {
         type: String,
-        required: true
+        required: true,
       },
       location: {
-        type: String
+        type: String,
       },
       from: {
         type: Date,
-        required: true
+        required: true,
       },
       to: {
-        type: Date
+        type: Date,
       },
       current: {
         type: Boolean,
-        default: false
+        default: false,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   education: [
     {
       school: {
         type: String,
-        required: true
+        required: true,
       },
       qualification: {
         type: String,
-        required: true
+        required: true,
       },
       fieldofstudy: {
         type: String,
-        required: true
+        required: true,
       },
       from: {
         type: Date,
-        required: true
+        required: true,
       },
       to: {
-        type: Date
+        type: Date,
       },
       current: {
         type: Boolean,
-        default: false
+        default: false,
       },
       description: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   social: {
     youtube: {
-      type: String
+      type: String,
     },
     twitter: {
-      type: String
+      type: String,
     },
     facebook: {
-      type: String
+      type: String,
     },
     linkedin: {
-      type: String
+      type: String,
     },
     instagram: {
-      type: String
-    }
+      type: String,
+    },
   },
   ratings: [
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users',
       },
       rating: {
         type: Number,
         min: 1,
         max: 5,
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = Proprofile = mongoose.model('proprofile', ProprofileSchema);

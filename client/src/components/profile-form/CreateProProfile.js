@@ -12,6 +12,7 @@ const CreateProProfile = ({ createProProfile, history }) => {
     status: '',
     skills: '',
     bio: '',
+    intro: '',
     youtube: '',
     twitter: '',
     facebook: '',
@@ -28,6 +29,7 @@ const CreateProProfile = ({ createProProfile, history }) => {
     status,
     skills,
     bio,
+    intro,
     youtube,
     twitter,
     facebook,
@@ -122,7 +124,19 @@ const CreateProProfile = ({ createProProfile, history }) => {
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
-
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Introduction Video"
+            name="intro"
+            value={intro}
+            onChange={(e) => onChange(e)}
+          />
+          <small className="form-text">
+            Post the YouTube embed code (eg.
+            https://www.youtube.com/embed/r6R2PZebALc)
+          </small>
+        </div>
         <div className="my-2">
           <button
             onClick={() => toggleSocialInputs(!displaySocialInputs)}
