@@ -16,7 +16,7 @@ export const avatarUpload = (formData) => async (dispatch) => {
       type: AVATAR_UPLOADED,
       payload: res.data,
     });
-    dispatch(setAlert('Avatar Uploaded', 'success'));
+    dispatch(setAlert('Uploading avatar...', 'success'));
     setTimeout(() => {
       dispatch(loadUser());
     }, 7000);
@@ -28,7 +28,7 @@ export const avatarUpload = (formData) => async (dispatch) => {
   }
 };
 
-//GET avatar
+//GET avatar **not used**
 export const getAvatar = (avatarId) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/avatar/image/${avatarId}`);

@@ -5,7 +5,7 @@ import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
-import Proprofile from './components/auth/Proprofile';
+//import Proprofile from './components/auth/Proprofile';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
@@ -18,6 +18,7 @@ import CustProProfile from './components/profile-form/EditCustProfile';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import ProProfiles from './components/profiles/ProProfiles';
+import ProProfile from './components/profile/ProProfile';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -53,7 +54,7 @@ const App = () => {
             <Switch>
               <Route exact path="/pro-login" component={Prologin} />
               <Route exact path="/pro-register" component={Proregister} />
-              <Route exact path="/pro-profile" component={Proprofile} />
+              <Route exact path="/pro-profile/:id" component={ProProfile} />
               <Route exact path="/pro-profiles" component={ProProfiles} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />

@@ -23,7 +23,7 @@ const ProProfileItem = ({
           {status} {company && <span>at {company}</span>}
         </p>
         <p className="my-1">{location && <span>{location}</span>}</p>
-        <Link to={`/profile/proprofiles/${_id}`} className="btn btn-primary">
+        <Link to={`/pro-profile/${_id}`} className="btn btn-primary">
           View Profile
         </Link>
       </div>

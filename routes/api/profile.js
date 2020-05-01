@@ -178,7 +178,7 @@ router.get('/proprofile/user/:user_id', async (req, res) => {
     //req.params.user_id is getting the id from the URL/path
     const profile = await Proprofile.findOne({
       user: req.params.user_id,
-    }).populate('user', ['name']);
+    }).populate('user', ['name', 'avatarId']);
     //console.log(req.params.user_id); logs URL id
     if (!profile) {
       return res

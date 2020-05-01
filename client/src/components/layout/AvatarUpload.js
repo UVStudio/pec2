@@ -6,7 +6,6 @@ import { avatarUpload } from '../../actions/avatar';
 const AvatarUpload = ({ avatarUpload }) => {
   const [avatar, setAvatar] = useState('');
   const [avatarName, setAvatarName] = useState('Select file');
-  //const [uploadedFile, setUploadedFile] = useState({});
 
   const onChange = async (e) => {
     setAvatar(e.target.files[0]);
@@ -20,9 +19,6 @@ const AvatarUpload = ({ avatarUpload }) => {
 
     try {
       avatarUpload(formData);
-      //await axios.post('/api/avatar/upload', formData);
-      // const { fileName, filePath } = res.data;
-      // setUploadedFile({ fileName, filePath });
     } catch (err) {
       if (err.response.status === 500) {
         console.log('There was a problem with the server.');
