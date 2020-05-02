@@ -54,6 +54,7 @@ router.post(
       bio,
       intro,
       status,
+      contact,
       skills,
       youtube,
       facebook,
@@ -72,6 +73,7 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (intro) profileFields.intro = intro;
     if (status) profileFields.status = status;
+    if (contact) profileFields.contact = contact;
     if (skills) {
       profileFields.skills = skills.split(',').map((skill) => skill.trim());
     }

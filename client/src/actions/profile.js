@@ -11,6 +11,8 @@ import { setAlert } from './alert';
 
 //GET current users profile
 export const getCurrentProfile = () => async (dispatch) => {
+  //added for security reason
+  dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get('/api/profile/me');
     dispatch({

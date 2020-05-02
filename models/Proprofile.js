@@ -30,6 +30,9 @@ const ProprofileSchema = new mongoose.Schema({
   intro: {
     type: String,
   },
+  contact: {
+    type: String,
+  },
   experience: [
     {
       title: {

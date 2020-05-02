@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
 
 const openTab = (e, tab) => {
   let i, tabcontent, tablinks;
@@ -21,6 +23,7 @@ const openTab = (e, tab) => {
 const ProfileTop = ({
   profile: {
     status,
+    contact,
     bio,
     intro,
     company,
@@ -28,6 +31,8 @@ const ProfileTop = ({
     website,
     social,
     skills,
+    experience,
+    education,
     user: { _id, name, avatarId },
   },
 }) => {
@@ -39,6 +44,9 @@ const ProfileTop = ({
           <img src={avatarPath} alt="" className="round-img" />
           <h1 className="large">{name}</h1>
           <p className="lead">{status}</p>
+          <p className="lead">
+            <a href={'mailto:' + contact}>{'email ' + name}</a>
+          </p>
           <p>{location && <span>{location}</span>}</p>
           <div className="icons my-1">
             {website && (
@@ -126,52 +134,30 @@ const ProfileTop = ({
             {bio ? <p>{bio}</p> : 'This person has not written a bio'}
           </div>
           <div id="Experience" className="tabcontent">
-            <div className="experience-item">
-              <h3 className="text-white pb">{company}</h3>
-              <p>Oct 2011 - Current</p>
-              <p className="pb">
-                <strong>Position: </strong>
-                {status}
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dignissimos placeat, dolorum ullam ipsam, sapiente suscipit
-                dicta eius velit amet aspernatur asperiores modi quidem expedita
-                fugit.
-              </p>
-            </div>
-            <div className="experience-item">
-              <h3 className="text-white pb">Sun Microsystems</h3>
-              <p>Nov 2004 - Nov 2011</p>
-              <p className="pb">
-                <strong>Position: </strong>Systems Admin
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dignissimos placeat, dolorum ullam ipsam, sapiente suscipit
-                dicta eius velit amet aspernatur asperiores modi quidem expedita
-                fugit.
-              </p>
-            </div>
+            {experience.length > 0 ? (
+              <Fragment>
+                {experience.map((experience) => (
+                  <ProfileExperience
+                    key={experience._id}
+                    experience={experience}
+                  />
+                ))}
+              </Fragment>
+            ) : (
+              <h4>No experience provided.</h4>
+            )}
           </div>
 
           <div id="Education" className="tabcontent">
-            <div className="experience-item">
-              <h3 className="text-white pb">University Of Washington</h3>
-              <p>Sep 1993 - June 1999</p>
-              <p>
-                <strong>Degree: </strong>Masters
-              </p>
-              <p className="pb">
-                <strong>Field Of Study: </strong>Computer Science
-              </p>
-              <p>
-                <strong>Description: </strong>Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Dignissimos placeat, dolorum ullam
-                ipsam, sapiente suscipit dicta eius velit amet aspernatur
-                asperiores modi quidem expedita fugit.
-              </p>
-            </div>
+            {education.length > 0 ? (
+              <Fragment>
+                {education.map((education) => (
+                  <ProfileEducation key={education._id} education={education} />
+                ))}
+              </Fragment>
+            ) : (
+              <h4>No education provided.</h4>
+            )}
           </div>
           <div id="Skills" className="tabcontent">
             <div className="skills">

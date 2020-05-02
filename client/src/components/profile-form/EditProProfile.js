@@ -15,6 +15,7 @@ const EditProProfile = ({
     website: '',
     location: '',
     status: '',
+    contact: '',
     skills: '',
     bio: '',
     intro: '',
@@ -46,6 +47,10 @@ const EditProProfile = ({
         loading || !profile.professionalprofile.status
           ? ''
           : profile.professionalprofile.status,
+      contact:
+        loading || !profile.professionalprofile.contact
+          ? ''
+          : profile.professionalprofile.contact,
       skills:
         loading || !profile.professionalprofile.skills
           ? ''
@@ -86,6 +91,7 @@ const EditProProfile = ({
     website,
     location,
     status,
+    contact,
     skills,
     bio,
     intro,
@@ -125,6 +131,16 @@ const EditProProfile = ({
           <small className="form-text">
             Give us an idea of where you are at in your career
           </small>
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Contact Email"
+            name="contact"
+            value={contact}
+            onChange={(e) => onChange(e)}
+          />
+          <small className="form-text">Your public email address</small>
         </div>
         <div className="form-group">
           <input
