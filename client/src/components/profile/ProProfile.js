@@ -16,7 +16,7 @@ const ProProfile = ({
   }, [getProProfileById, match.params.id]);
   return (
     <Fragment>
-      {profile === null || loading ? (
+      {profile == null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
