@@ -9,6 +9,7 @@ import ProfileTop from './ProfileTop';
 const ProProfile = ({
   match,
   getProProfileById,
+  auth,
   profile: { profile, loading },
 }) => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const ProProfile = ({
             Back To Profiles
           </Link>
           <div className="profile-grid my-1">
-            <ProfileTop profile={profile} />
+            <ProfileTop profile={profile} auth={auth} />
           </div>
         </Fragment>
       )}

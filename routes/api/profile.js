@@ -121,7 +121,16 @@ router.post(
   auth,
 
   async (req, res) => {
-    const { need, location, bio, facebook } = req.body;
+    const {
+      need,
+      location,
+      bio,
+      facebook,
+      youtube,
+      twitter,
+      instagram,
+      linkedin,
+    } = req.body;
 
     //Build profile object
     const profileFields = {};
@@ -130,7 +139,13 @@ router.post(
     if (need) profileFields.need = need;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
-    if (facebook) profileFields.facebook = facebook;
+
+    profileFields.social = {};
+    if (youtube) profileFields.social.youtube = youtube;
+    if (twitter) profileFields.social.twitter = twitter;
+    if (facebook) profileFields.social.facebook = facebook;
+    if (linkedin) profileFields.social.linkedin = linkedin;
+    if (instagram) profileFields.social.instagram = instagram;
 
     try {
       let profile = await Custprofile.findOne({ user: req.user.id });

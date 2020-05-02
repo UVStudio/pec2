@@ -49,12 +49,14 @@ const CreateCustProfile = ({ createCustProfile, history }) => {
         <div className="form-group">
           <select name="need" value={need} onChange={(e) => onChange(e)}>
             <option value="0">* Select Professional Need</option>
-            <option value="Developer">Registered Nurse</option>
-            <option value="Junior Developer">Professional Social Worker</option>
-            <option value="Senior Developer">Doctor</option>
+            <option value="Registered Nurse">Registered Nurse</option>
+            <option value="Professional Social Worker">
+              Professional Social Worker
+            </option>
+            <option value="Doctor">Doctor</option>
           </select>
           <small className="form-text">
-            Give us an idea of where you are at in your career
+            Which professional service do you need?
           </small>
         </div>
         <div className="form-group">
@@ -76,7 +78,10 @@ const CreateCustProfile = ({ createCustProfile, history }) => {
             value={bio}
             onChange={(e) => onChange(e)}
           ></textarea>
-          <small className="form-text">Tell us a little about yourself</small>
+          <small className="form-text">
+            If you can, tell us the details of your situation and what you are
+            looking for.
+          </small>
         </div>
 
         <div className="my-2">

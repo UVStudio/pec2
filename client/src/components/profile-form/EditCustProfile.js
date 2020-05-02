@@ -39,23 +39,23 @@ const EditCustProfile = ({
           ? ''
           : profile.customerprofile.bio,
       twitter:
-        loading || !profile.social
+        loading || !profile.customerprofile.social.twitter
           ? ''
           : profile.customerprofile.social.twitter,
       facebook:
-        loading || !profile.social
+        loading || !profile.customerprofile.social.facebook
           ? ''
           : profile.customerprofile.social.facebook,
       linkedin:
-        loading || !profile.social
+        loading || !profile.customerprofile.social.linkedin
           ? ''
           : profile.customerprofile.social.linkedin,
       youtube:
-        loading || !profile.social
+        loading || !profile.customerprofile.social.youtube
           ? ''
           : profile.customerprofile.social.youtube,
       instagram:
-        loading || !profile.social
+        loading || !profile.customerprofile.social.instagram
           ? ''
           : profile.customerprofile.social.instagram,
     });
@@ -99,7 +99,7 @@ const EditCustProfile = ({
             <option value="Doctor">Doctor</option>
           </select>
           <small className="form-text">
-            Give us an idea of where you are at in your career
+            Which professional service do you need?
           </small>
         </div>
         <div className="form-group">
@@ -121,7 +121,10 @@ const EditCustProfile = ({
             value={bio}
             onChange={(e) => onChange(e)}
           ></textarea>
-          <small className="form-text">Tell us a little about yourself</small>
+          <small className="form-text">
+            If you can, tell us the details of your situation and what you are
+            looking for.
+          </small>
         </div>
 
         <div className="my-2">

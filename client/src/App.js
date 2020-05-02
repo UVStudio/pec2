@@ -5,7 +5,6 @@ import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
-//import Proprofile from './components/auth/Proprofile';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import Custprofile from './components/auth/Custprofile';
@@ -38,7 +37,6 @@ if (localStorage.token) {
 }
 
 const App = () => {
-  //look up hooks useEffect(), this would be a lot like componentDidMount
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);

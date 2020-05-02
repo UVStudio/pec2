@@ -21,6 +21,7 @@ const openTab = (e, tab) => {
 };
 
 const ProfileTop = ({
+  auth: { token },
   profile: {
     status,
     contact,
@@ -44,9 +45,13 @@ const ProfileTop = ({
           <img src={avatarPath} alt="" className="round-img" />
           <h1 className="large">{name}</h1>
           <p className="lead">{status}</p>
-          <p className="lead">
-            <a href={'mailto:' + contact}>{'email ' + name}</a>
-          </p>
+          {token ? (
+            <p className="lead">
+              <a href={'mailto:' + contact}>{'Email ' + name}</a>
+            </p>
+          ) : (
+            'Register to contact this professional'
+          )}
           <p>{location && <span>{location}</span>}</p>
           <div className="icons my-1">
             {website && (

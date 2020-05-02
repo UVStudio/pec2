@@ -60,8 +60,10 @@ const Dashboard = ({
         </Fragment>
       ) : profile.customerprofile ? (
         <Fragment>
-          You have a customer profile. Are you qualified to sign up for a
-          professional profile?
+          You have a customer profile.
+          <CustDashboardActions />
+          <br></br>
+          Are you qualified to sign up for a professional profile?
           <br></br>
           <Link to="/create-pro-profile" className="btn btn-primary my-1">
             Create Professional Profile
