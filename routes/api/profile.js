@@ -216,6 +216,34 @@ router.get('/proprofile/user/:user_id', async (req, res) => {
   }
 });
 
+//@route  GET api/profile/custprofile/user/:user_id
+//@desc   Get CUSTOMER profile by user Id
+//@access Public
+
+router.get('/custprofile/user/:user_id', async (req, res) => {
+  try {
+    //req.params.user_id is getting the id from the URL/path
+    const profile = await Custprofile.findOne({
+      user: req.params.user_id,
+    }).populate('user', ['name', 'avatarId']);
+    //console.log(req.params.user_id); logs URL id
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ msg: 'There is no profile for this user.' });
+    }
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'There is no profile for this user. (err.kind)' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 //@route  DELETE api/profile/proprofile
 //@desc   Delete user's PROFESSIONAL profile
 //@access Private

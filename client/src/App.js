@@ -7,7 +7,7 @@ import Prologin from './components/auth/Prologin';
 import Proregister from './components/auth/Proregister';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
-import Custprofile from './components/auth/Custprofile';
+import CustProfile from './components/profile/CustProfile';
 import UserControl from './components/dashboard/UserControl';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProProfile from './components/profile-form/CreateProProfile';
@@ -56,7 +56,7 @@ const App = () => {
               <Route exact path="/pro-profiles" component={ProProfiles} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
-              <Route exact path="/cust-profile" component={Custprofile} />
+              <Route exact path="/cust-profile/:id" component={CustProfile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

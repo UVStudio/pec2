@@ -1,29 +1,25 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { getProProfileById } from '../../actions/profile';
-import ProfileTop from './ProProfileTop';
+import { getCustProfileById } from '../../actions/profile';
+import ProfileTop from './CustProfileTop';
 
-const ProProfile = ({
+const CustProfile = ({
   match,
-  getProProfileById,
+  getCustProfileById,
   auth,
   profile: { profile, loading },
 }) => {
   useEffect(() => {
-    getProProfileById(match.params.id);
-  }, [getProProfileById, match.params.id]);
+    getCustProfileById(match.params.id);
+  }, [getCustProfileById, match.params.id]);
   return (
     <Fragment>
       {profile == null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
-          <Link to="/pro-profiles" className="btn btn-light">
-            Back To Profiles
-          </Link>
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} auth={auth} />
           </div>
@@ -33,8 +29,8 @@ const ProProfile = ({
   );
 };
 
-ProProfile.propTypes = {
-  getProProfileById: PropTypes.func.isRequired,
+CustProfile.propTypes = {
+  getCustProfileById: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -44,4 +40,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getProProfileById })(ProProfile);
+export default connect(mapStateToProps, { getCustProfileById })(CustProfile);

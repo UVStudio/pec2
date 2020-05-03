@@ -13,11 +13,6 @@ const Avatar = ({ auth: { loading, user } }) => {
 
   const avatarPath = `api/avatar/image/${avatarId}`;
 
-  // return (
-  //   <div className="profile-info-left">
-  //     <img className="round-img my-1" src={avatarId ? avatarPath : ''} alt="" />
-  //   </div>
-  // );
   return (
     <Fragment>
       {user == null || loading ? (

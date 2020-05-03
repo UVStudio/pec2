@@ -42,7 +42,11 @@ const ProfileTop = ({
     <div>
       <div className="profile-top bg-primary p-2">
         <div className="profile-info-left">
-          <img src={avatarPath} alt="" className="round-img" />
+          <img
+            src={avatarPath ? avatarPath : ''}
+            alt=""
+            className="round-img"
+          />
           <h1 className="large">{name}</h1>
           <p className="lead">{status}</p>
           {token ? (
@@ -58,7 +62,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + website}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fas fa-globe fa-2x" />
               </a>
@@ -67,7 +71,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + social.twitter}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-twitter fa-2x" />
               </a>
@@ -76,7 +80,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + social.facebook}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-facebook fa-2x" />
               </a>
@@ -85,7 +89,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + social.linkedin}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-linkedin fa-2x" />
               </a>
@@ -94,7 +98,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + social.youtube}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-youtube fa-2x" />
               </a>
@@ -103,7 +107,7 @@ const ProfileTop = ({
               <a
                 href={'http://' + social.instagram}
                 target="_blank"
-                rel="noopener nonreferrer"
+                rel="noopener noreferrer"
               >
                 <i className="fab fa-instagram fa-2x" />
               </a>

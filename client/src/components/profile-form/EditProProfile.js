@@ -64,23 +64,23 @@ const EditProProfile = ({
           ? ''
           : profile.professionalprofile.intro,
       twitter:
-        loading || !profile.professionalprofile.social.twitter
+        loading || !profile.professionalprofile.social
           ? ''
           : profile.professionalprofile.social.twitter,
       facebook:
-        loading || !profile.professionalprofile.social.facebook
+        loading || !profile.professionalprofile.social
           ? ''
           : profile.professionalprofile.social.facebook,
       linkedin:
-        loading || !profile.professionalprofile.social.linkedin
+        loading || !profile.professionalprofile.social
           ? ''
           : profile.professionalprofile.social.linkedin,
       youtube:
-        loading || !profile.professionalprofile.social.youtube
+        loading || !profile.professionalprofile.social
           ? ''
           : profile.professionalprofile.social.youtube,
       instagram:
-        loading || !profile.professionalprofile.social.instagram
+        loading || !profile.professionalprofile.social
           ? ''
           : profile.professionalprofile.social.instagram,
     });

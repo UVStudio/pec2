@@ -39,23 +39,23 @@ const EditCustProfile = ({
           ? ''
           : profile.customerprofile.bio,
       twitter:
-        loading || !profile.customerprofile.social.twitter
+        loading || !profile.customerprofile.social
           ? ''
           : profile.customerprofile.social.twitter,
       facebook:
-        loading || !profile.customerprofile.social.facebook
+        loading || !profile.customerprofile.social
           ? ''
           : profile.customerprofile.social.facebook,
       linkedin:
-        loading || !profile.customerprofile.social.linkedin
+        loading || !profile.customerprofile.social
           ? ''
           : profile.customerprofile.social.linkedin,
       youtube:
-        loading || !profile.customerprofile.social.youtube
+        loading || !profile.customerprofile.social
           ? ''
           : profile.customerprofile.social.youtube,
       instagram:
-        loading || !profile.customerprofile.social.instagram
+        loading || !profile.customerprofile.social
           ? ''
           : profile.customerprofile.social.instagram,
     });
@@ -82,7 +82,7 @@ const EditCustProfile = ({
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Create Your Customer Profile</h1>
+      <h1 className="large text-primary">Edit Your Customer Profile</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Please tell us a few things about
         yourself and what are of help you need
