@@ -8,6 +8,7 @@ import Proregister from './components/auth/Proregister';
 import Custlogin from './components/auth/Custlogin';
 import Custregister from './components/auth/Custregister';
 import CustProfile from './components/profile/CustProfile';
+import CurrentCustProfile from './components/profile/CurrentCustProfile';
 import UserControl from './components/dashboard/UserControl';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProProfile from './components/profile-form/CreateProProfile';
@@ -18,6 +19,7 @@ import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import ProProfiles from './components/profiles/ProProfiles';
 import ProProfile from './components/profile/ProProfile';
+import CurrentProProfile from './components/profile/CurrentProProfile';
 import About from './components/main/About';
 import Articles from './components/main/Articles';
 import Search from './components/main/Search';
@@ -53,10 +55,16 @@ const App = () => {
               <Route exact path="/pro-login" component={Prologin} />
               <Route exact path="/pro-register" component={Proregister} />
               <Route exact path="/pro-profile/:id" component={ProProfile} />
+              <Route exact path="/pro-profile" component={CurrentProProfile} />
               <Route exact path="/pro-profiles" component={ProProfiles} />
               <Route exact path="/cust-login" component={Custlogin} />
               <Route exact path="/cust-register" component={Custregister} />
               <Route exact path="/cust-profile/:id" component={CustProfile} />
+              <Route
+                exact
+                path="/cust-profile"
+                component={CurrentCustProfile}
+              />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

@@ -9,7 +9,7 @@ import {
 } from './types';
 import { setAlert } from './alert';
 
-//GET current users profile
+//GET current user's profiles (both pro and cust)
 export const getCurrentProfile = () => async (dispatch) => {
   //added for security reason
   dispatch({ type: CLEAR_PROFILE });
@@ -27,7 +27,42 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
-//GET all profiles
+//GET current user's pro profile
+export const getCurrentProProfile = () => async (dispatch) => {
+  //added for security reason
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile/proprofile');
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const getCurrentCustProfile = () => async (dispatch) => {
+  //added for security reason
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile/custprofile');
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//GET all pro profiles
 export const getProProfiles = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   try {

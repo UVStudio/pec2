@@ -9,6 +9,7 @@ import Experience from '../dashboard/Experience';
 import Education from '../dashboard/Education';
 import CustDashboardActions from './CustDashboardAction';
 import Avatar from '../layout/Avatar';
+import ProProfile from '../profile/ProProfile';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -29,7 +30,6 @@ const Dashboard = ({
       <div className="profile-top p-2">
         <Avatar />
       </div>
-
       <p>You can update your user information here:</p>
       <Link to="/user-control" className="btn btn-primary my-1">
         Update User infomation
@@ -49,10 +49,10 @@ const Dashboard = ({
         </Fragment>
       ) : profile.professionalprofile && profile.customerprofile ? (
         <Fragment>
-          You have a professional profile.
+          You have a <Link to="/pro-profile">professional profile</Link>.
           <ProDashboardActions />
           <br></br>
-          You have a customer profile.
+          You have a <Link to="/cust-profile">customer profile</Link>.
           <CustDashboardActions />
           <br></br>
           <Experience experience={profile.professionalprofile.experience} />
@@ -60,7 +60,7 @@ const Dashboard = ({
         </Fragment>
       ) : profile.customerprofile ? (
         <Fragment>
-          You have a customer profile.
+          You have a <Link to="/cust-profile">customer profile</Link>.
           <CustDashboardActions />
           <br></br>
           Are you qualified to sign up for a professional profile?
@@ -71,7 +71,7 @@ const Dashboard = ({
         </Fragment>
       ) : profile.professionalprofile ? (
         <Fragment>
-          You have a professional profile.
+          You have a <Link to="/pro-profile">professional profile</Link>.
           <ProDashboardActions />
           <br></br>
           <Link to="/create-cust-profile" className="btn btn-primary my-1">

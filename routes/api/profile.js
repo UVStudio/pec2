@@ -28,6 +28,44 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+//@route  GET api/profile/proprofile
+//@desc   Get current user's PROFESSIONAL profile
+//@access Private
+
+router.get('/proprofile', auth, async (req, res) => {
+  try {
+    const proprofile = await Proprofile.findOne({ user: req.user.id });
+    if (!proprofile) {
+      return res.json({ professionalprofile: null });
+    }
+    res.json({
+      professionalprofile: proprofile,
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+//@route  GET api/profile/custprofile
+//@desc   Get current user's CUSTOMER profile
+//@access Private
+
+router.get('/custprofile', auth, async (req, res) => {
+  try {
+    const custprofile = await Custprofile.findOne({ user: req.user.id });
+    if (!custprofile) {
+      return res.json({ customerprofile: null });
+    }
+    res.json({
+      customerprofile: custprofile,
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 //@route  POST api/profile/proprofile
 //@desc   Create or update a user PROFESSIONAL profile
 //@access Private
