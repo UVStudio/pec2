@@ -5,6 +5,7 @@ import {
   CLEAR_PROFILE,
   CLEAR_PROFILES,
   UPDATE_PROFILE,
+  CLEAR_PROFILE_STATE,
 } from '../actions/types';
 
 const initialState = {
@@ -46,6 +47,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profiles: [],
+        loading: false,
+      };
+    case CLEAR_PROFILE_STATE:
+      return {
+        ...state,
         loading: false,
       };
     default:

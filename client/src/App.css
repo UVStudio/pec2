@@ -224,6 +224,9 @@ ul {
 
 .round-img {
   border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
 }
 
 .line {
@@ -487,7 +490,7 @@ button {
 .tabcontent {
   display: none;
   padding: 2rem 1rem;
-  text-align: left;
+  text-align: center;
 }
 
 .experience-item {

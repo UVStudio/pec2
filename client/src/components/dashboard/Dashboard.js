@@ -9,7 +9,6 @@ import Experience from '../dashboard/Experience';
 import Education from '../dashboard/Education';
 import CustDashboardActions from './CustDashboardAction';
 import Avatar from '../layout/Avatar';
-import ProProfile from '../profile/ProProfile';
 
 const Dashboard = ({
   getCurrentProfile,

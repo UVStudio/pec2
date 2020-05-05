@@ -8,6 +8,7 @@ import {
   GET_USER,
   USER_ERROR,
   AUTH_ERROR,
+  CLEAR_PROFILE,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
@@ -113,9 +114,8 @@ export const login = (email, password) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-
   const body = JSON.stringify({ email, password });
-
+  dispatch({ type: CLEAR_PROFILE, payload: null });
   try {
     const res = await axios.post('/api/auth', body, config);
     dispatch({
@@ -137,6 +137,6 @@ export const login = (email, password) => async (dispatch) => {
 //LOGOUT / Clear profile
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
-  //dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: CLEAR_PROFILE });
   //dispatch({ type: CLEAR_PROFILES });
 };
