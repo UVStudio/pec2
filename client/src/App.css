@@ -39,6 +39,10 @@ ul {
   margin-bottom: 1rem;
 }
 
+#about {
+  margin-top: 3rem;
+}
+
 /* Text Styles*/
 .x-large {
   font-size: 4rem;
@@ -355,6 +359,8 @@ button {
 /* Landing Page */
 .landing {
   display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .landing-inner {
@@ -489,8 +495,8 @@ button {
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 2rem 1rem;
-  text-align: center;
+  padding: 2rem 2rem;
+  text-align: left;
 }
 
 .experience-item {
@@ -989,5 +995,9 @@ button {
 
   .lead {
     font-size: 0.8rem;
+  }
+
+  .tabcontent {
+    padding: 2rem 1rem;
   }
 }
