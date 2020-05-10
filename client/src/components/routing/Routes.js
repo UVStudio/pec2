@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Route, Switch } from 'react-router-dom';
 import About from '../../components/layout/About';
 import Prologin from '../../components/auth/Prologin';
 import Proregister from '../../components/auth/Proregister';
@@ -23,7 +23,7 @@ import Search from '../../components/main/Search';
 import Alert from '../../components/layout/Alert';
 import PrivateRoute from '../../components/routing/PrivateRoute';
 
-const Routes = (props) => {
+const Routes = () => {
   return (
     <div>
       <section className="container">
